@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>You're Fat. Stop that - Sign In</title>
+</head>
+
+<body>
+  <script src="index.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer onload="startGoogleSignIn()"></script>
+  <div class="video-container">
+    <video width="1920" height="1080" autoplay muted loop>
+      <source src="background.mp4" type="video/mp4" >
+      Your browser does not support the video tag.
+  </video>
+  </div>
+  <main>
+    <div class="content-container">
+          <h1>You're <span class="emphasis">Fat</span>. Stop that.</h1>
+          <h2>No nonsense. Get your life back on track.</h2>
+        <div class="button-container">
+          <button onclick="googleSignIn()" class="btn-google">Sign In with Google</a>
+        </div>
+    </div>
+  </main>
+</body>
+</html>
