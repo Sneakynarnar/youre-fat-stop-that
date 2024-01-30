@@ -1,0 +1,15 @@
+{
+  "name": "yfst",
+  "version": "0.0.1",
+  "description": "BETA",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server/server.mjs",
+    "test": "test"
+  },
+  "author": "An anonymous student",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
