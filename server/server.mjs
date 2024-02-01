@@ -28,9 +28,7 @@ app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 app.post('/googleauth'), async (req, res) => {
-  
-  googleAuth();
-  
+  googleAuth(req.body);
 }
 
 // open('http://localhost:8080', { app: 'chrome' });
