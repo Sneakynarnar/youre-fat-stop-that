@@ -1,0 +1,138 @@
+{
+  "cardio": {
+    "name": "Cardio",
+    "activities": {
+      "jumping-jacks": {
+        "name": "Jumping Jacks",
+        "type": 1,
+        "base_reps": 5,
+        "average_rep": 2
+      },
+      "onspot-jogging": {
+        "name": "Jogging in place",
+        "type": 2,
+        "base_time": 10
+      },
+      "push-ups": {
+        "name": "Push-Ups",
+        "type": 2,
+        "base_time": 10
+      },
+      "burpees": {
+        "name": "Burpees",
+        "type": 1,
+        "base_reps": 10,
+        "average_rep": 3
+      },
+      "mountain-climbers": {
+        "name": "Mountain Climbers",
+        "type": 1,
+        "base_reps": 10,
+        "average_rep": 2
+      }
+    }
+  },
+  "outside": {
+    "name": "Outside Exercise",
+    "activities": {
+      "walk": {
+        "name": "Walk",
+        "type": 2,
+        "base_time": 15
+      },
+      "run": {
+        "name": "Run",
+        "type": 2,
+        "base_time": 15,
+        "rests": 2
+      },
+      "bicycle": {
+        "name": "Bicycle",
+        "type": 2,
+        "base_time": 15
+      },
+      "jump-rope": {
+        "name": "Jump Rope",
+        "type": 1,
+        "base_reps": 50,
+        "average_rep": 1
+      },
+      "hiking": {
+        "name": "Hiking",
+        "type": 2,
+        "base_time": 30
+      }
+    }
+  },
+  "weights": {
+    "name": "Weights",
+    "activities": {
+      "curls": {
+        "name": "Curls",
+        "type": 1,
+        "base_reps": 10,
+        "average_rep": 2
+      },
+      "bench-press": {
+        "name": "Bench Press",
+        "type": 1,
+        "base_reps": 8,
+        "average_rep": 2
+      },
+      "squats": {
+        "name": "Squats",
+        "type": 1,
+        "base_reps": 12,
+        "average_rep": 2
+      }
+    }
+  },
+  "warm-up": {
+    "name": "Warm Up",
+    "activities": {
+      "shoulder-stretch": {
+        "name": "Shoulder Stretch",
+        "type": 1,
+        "base_reps": 10,
+        "average_rep": 2
+      },
+      "toe-touch": {
+        "name": "Toe Touch",
+        "type": 1,
+        "base_reps": 5,
+        "average_rep": 2
+      },
+      "neck-rotation": {
+        "name": "Neck Rotation",
+        "type": 1,
+        "base_reps": 8,
+        "average_rep": 2
+      },
+      "lunges": {
+          "name": "Lunges",
+          "type": 1,
+          "base_reps": 10,
+          "average_rep": 2
+      },
+      "hamstring-stretch": {
+        "name": "Hamstring Stretch",
+        "type": 1,
+        "base_reps": 8,
+        "average_rep": 2
+      },
+      "quad-stretch": {
+        "name": "Quad Stretch",
+        "type": 1,
+        "base_reps": 10,
+        "average_rep": 2
+      },
+      "calf-stretch": {
+        "name": "Calf Stretch",
+        "type": 1,
+        "base_reps": 8,
+        "average_rep": 2
+          
+      }
+    }
+  }
+}

@@ -1,82 +1,82 @@
-    /* Add your custom styling here */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #000000;
-    }
+/* Add your custom styling here */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #000000;
+}
 
+.content-container {
+  margin-top: 17em;
+}
+.button-container {
+  margin-top: 50%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-    .content-container {
-      margin-top: 17em;
-    }
-    .button-container {
-      margin-top: 50%;
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
+.emphasis {
+  color: red;
+}
 
-    .emphasis {
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  color: white;
+  font-size: 7em;
+}
 
-      color:red
-    }
+h2 {
+  text-align: center;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  color: white;
+  font-size: 2em;
+}
 
-    h1 { 
-      
-      text-align: center;
-      margin-bottom: 20px;
-      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-      color: white;
-      font-size: 7em;
-    }
-    
-    h2 {
-      text-align: center;
-      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-      color: white;
-      font-size: 2em;
-    }
+.video-container {
+  /* this is the container the contains the video so it must be behind the elements*/
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0.2;
+  z-index: -1;
+}
 
-    .video-container { /* this is the container the contains the video so it must be behind the elements*/
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      opacity: 0.2;
-      z-index: -1; 
-    }
+video {
+  width: 100%;
+  height: 100%;
+  zoom: 150%;
+  object-fit: cover; /* Cover the entire viewport */
+}
+.btn-google {
+  /* button for signing in */
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #4285f4;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
 
-    video {
-      width: 100%;
-      height: 100%;
-      zoom: 150%;
-      object-fit: cover; /* Cover the entire viewport */ 
-    } 
-    .btn-google {  /* button for signing in */
-      display: block;
-      width: 100%;
-      padding: 10px;
-      margin-top: 20px;
-      background-color: #4285f4;
-      color: #fff;
-      text-align: center;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-
-    .btn-google:hover {
-      background-color: #3367d6;
-    }
-    .main {
-      position: relative;
-      z-index: 1;
-      background-color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+.btn-google:hover {
+  background-color: #3367d6;
+}
+.main {
+  position: relative;
+  z-index: 1;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

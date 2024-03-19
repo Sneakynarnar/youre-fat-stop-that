@@ -1,49 +1,21 @@
-/* FILEPATH: /c:/Users/elite/OneDrive/Documents/university-work/webprog/You're Fat. Stop that/youre-fat-stop-that/client/dashboard/style.css */
 
-/* Styles for the dashboard */
+
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f2f2f2;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-}
-
-.title {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.menu {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+}
+.progress-ring {
+  width: 10%;
+  height: 10%;
+} 
+
+.progress-ring-circle {
+  transform-origin: 250px 250px;
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%,
 }
 
-.menu-item {
-  padding: 10px;
-  background-color: #ccc;
-  color: #333;
-  border-radius: 5px;
-}
-
-.content {
-  margin-top: 20px;
-}
-
-.footer {
-  background-color: #333;
-  color: #fff;
-  padding: 10px;
-  text-align: center;
+.progress-text {
+  font: 4em serif;
 }

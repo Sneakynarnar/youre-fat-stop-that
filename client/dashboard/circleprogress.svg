@@ -1,0 +1,17 @@
+ <svg
+  class="progress-ring"
+  viewBox="0 0 500 500"
+  >
+  <circle
+    class="progress-ring-circle"
+    stroke="black"
+    stroke-width="4"
+    fill="transparent"
+    r="129"
+    cx="250"
+    cy="250"
+  />
+
+  </svg>
+
+  <button id="startButton">Start Activity</button>

@@ -1,30 +1,83 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Dashboard</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-  <header>
-    <h1>Welcome to the Dashboard</h1>
-  </header>
-  
-  <nav>
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Profile</a></li>
-      <li><a href="#">Settings</a></li>
-      <li><a href="#">Logout</a></li>
-    </ul>
-  </nav>
-  
-  <main>
-    <h2>Dashboard Content</h2>
-    <p>This is the main content of the dashboard.</p>
-  </main>
-  
-  <footer>
-    <p>&copy; 2022 Dashboard. All rights reserved.</p>
-  </footer>
-</body>
+  <head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="index.js"></script>
+  </head>
+  <body>
+    <h1>Dashboard</h1>
+    <svg class="progress-ring" viewBox="0 0 500 500">
+      <text
+        id="ctext"
+        class="progress-text"
+        x="250"
+        y="250"
+        text-anchor="middle"
+        dominant-baseline="middle"
+      >
+        0%
+      </text>
+      <circle
+        class="progress-ring-circle"
+        id="a"
+        stroke="black"
+        stroke-width="4"
+        fill="transparent"
+        r="129"
+        cx="250"
+        cy="250"
+      />
+    </svg>
+
+    <svg class="progress-ring" viewBox="0 0 500 500">
+      <text
+        id="btext"
+        class="progress-text"
+        x="250"
+        y="250"
+        text-anchor="middle"
+        dominant-baseline="middle"
+      >
+        0%
+      </text>
+      <circle
+        class="progress-ring-circle"
+        id="b"
+        stroke="black"
+        stroke-width="4"
+        fill="transparent"
+        r="129"
+        cx="250"
+        cy="250"
+      />
+    </svg>
+    <svg class="progress-ring" viewBox="0 0 500 500">
+      <text
+        id="ctext"
+        class="progress-text"
+        x="250"
+        y="250"
+        text-anchor="middle"
+        dominant-baseline="middle"
+      >
+        0%
+      </text>
+      <circle
+        id="c"
+        class="progress-ring-circle"
+        stroke="black"
+        stroke-width="4"
+        fill="transparent"
+        r="129"
+        cx="250"
+        cy="250"
+      />
+    </svg>
+
+    <input class="testslider" type="range" min="0" max="100" value="50" />
+    <input class="testslider2" type="range" min="0" max="100" value="50" />
+    <input class="testslider3" type="range" min="0" max="100" value="50" />
+    <button id="startButton">Start Activity</button>
+  </body>
 </html>
