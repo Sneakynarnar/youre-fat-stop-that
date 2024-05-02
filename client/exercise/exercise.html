@@ -5,22 +5,41 @@
   <title>YFST - exercise</title>
   <link rel="stylesheet" href="style.css">
   <script defer src="exercise.mjs"></script>
-  <style>
-  
-  </style>
 </head>
 <body>
-  <div id="screen1" class="screen active">
-    <div class="addbutton">
-      <p id="plusbutton">+</p>
+  <section id="screen1" class="screen active">
+    <div class="panelcontainer">
+      <div class="panel addbutton">
+        <!--p id="plusbutton">+ also check if its faster to use templates or just to hide it</p-->
+      </div>
     </div>
-  </div>
-  </div>
-  <div id="screen2" class="screen">
+  </section>
+  <section id="screen2" class="screen">
+    <div id="createphase1" class="subscreen active">
+      <h1>What would you like to name your workout routine</h1> 
+      <input type="text" id="exerciseroutinename">
+      <button id="confirmworkoutname">Confirm</button>
+    </div>
+    <div id="createphase2" class="subscreen">
+      <div id="exerciseroutine"></div>
+      <h1>Select a workout move</h1>
+      <div id="exerciseoptions">  
+      </div>
+      <dialog id="exercise-intensity">
+        <form method="dialog">
+          <label id="exercise-details-label">How many reps would you like to do</label>
+          <input id="exercise-details-input" type="number">
+          <p id="timelength"></p>
+          <button id="confirm-exercise-modal" disabled>Confirm</button>
+        </form>
+      </dialog>
+    </div>
+  </section>
+  <section id="screen3" class="screen">
     <div id="main">
       <button class="timerButton">start timer</button>
       <p class="timer1">TIME</p>
-  </div>
+  </section>
 
 </body>
 </html>

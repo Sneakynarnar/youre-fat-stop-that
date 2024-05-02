@@ -2,6 +2,8 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { load_dotenv } from "./dotenv.mjs";
+import { getExercises } from "./accounts.mjs";
+
 //import open from 'open';
 const app = express();
 const port = 8080;
@@ -16,6 +18,12 @@ app.use(express.json());
 app.get("/", (req, res) => {
   send(res, "/client/index.html");
 });
+app.get ("/api/workouts", async (req, res) => {
+  const exercises = await getExercises()
+  console.log(exercises)
+  
+  res.json(exercises)
+})
 app.get("/dashboard", (req, res) => {
   send(res, "/client/dashboard/dashboard.html");
 });

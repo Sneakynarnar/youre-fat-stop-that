@@ -1,7 +1,13 @@
+body {
+  display: flex
+}
+
+.subscreen,
 .screen {
   display: none;
 }
-.screen.active {
+.screen.active,
+.subscreen.active {
   display: block; 
 }/* check if templates are faster */
 
@@ -9,11 +15,31 @@
   display: flex; 
 }
 
+.exercise-category {
+  justify-items: center;
+  display:flex
+}
+.exercise-panel {
+  height: 5em;
+  width: 5em;
+  justify-content: center;
+  justify-items: center;
+  display: flex;
+  border: solid black
+}
+.exercise-name-text {
+  align-self: center;
+  text-align: center;
+}
 .button {
   background-color: azure;
   border: 3px solid;
 }
 
+#exerciseroutine {
+  display: flex;  
+
+}
 .unselected {
   display: none;
 }
@@ -21,4 +47,22 @@
   transition: ease-in-out 0.3s;
   transform: scale(1.05);
   cursor: pointer;
+}
+
+.panelcontainer {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+
+}
+
+.panel {
+  border: solid 0.2em black;
+  height: 10em;
+  width: 7em; 
+}
+
+.panel:hover {
+  transform: scale(1.05);
+  transition: ease-in-out 0.1s
 }

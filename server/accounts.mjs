@@ -1,5 +1,6 @@
 import fs from 'fs/promises'
-const exercises = JSON.parse(fs.readFile('exercises.json'))
+const jsonData = await fs.readFile('server/exercises.json')
+const exercises = JSON.parse(jsonData)
 /** 
  * Gets all the excercises that are in the app if no category is specified. If one is specified it shows the info about that particular
  * category.
@@ -16,7 +17,7 @@ export async function getExercises(category) {
 }
 
 async function getExerciseActivities(exercise) {
-  return exercises[exercise].activities 
+  return exercises[exercise].activities
 }
 
 export async function generatePersonalisedExercises(userID, time, exercise) { // instead of figuring out what the user wants let user pick the excercises

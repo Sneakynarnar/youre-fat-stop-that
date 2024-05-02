@@ -1,4 +1,52 @@
 {
+  "warm-up": {
+    "name": "Warm Up",
+    "activities": {
+      "shoulder-stretch": {
+        "name": "Shoulder Stretch",
+        "type": 1,
+        "base_reps": 10,
+        "average_rep": 2
+      },
+      "toe-touch": {
+        "name": "Toe Touch",
+        "type": 1,
+        "base_reps": 5,
+        "average_rep": 2
+      },
+      "neck-rotation": {
+        "name": "Neck Rotation",
+        "type": 1,
+        "base_reps": 8,
+        "average_rep": 2
+      },
+      "lunges": {
+          "name": "Lunges",
+          "type": 1,
+          "base_reps": 10,
+          "average_rep": 2
+      },
+      "hamstring-stretch": {
+        "name": "Hamstring Stretch",
+        "type": 1,
+        "base_reps": 8,
+        "average_rep": 2
+      },
+      "quad-stretch": {
+        "name": "Quad Stretch",
+        "type": 1,
+        "base_reps": 10,
+        "average_rep": 2
+      },
+      "calf-stretch": {
+        "name": "Calf Stretch",
+        "type": 1,
+        "base_reps": 8,
+        "average_rep": 2
+          
+      }
+    }
+  },
   "cardio": {
     "name": "Cardio",
     "activities": {
@@ -84,54 +132,6 @@
         "type": 1,
         "base_reps": 12,
         "average_rep": 2
-      }
-    }
-  },
-  "warm-up": {
-    "name": "Warm Up",
-    "activities": {
-      "shoulder-stretch": {
-        "name": "Shoulder Stretch",
-        "type": 1,
-        "base_reps": 10,
-        "average_rep": 2
-      },
-      "toe-touch": {
-        "name": "Toe Touch",
-        "type": 1,
-        "base_reps": 5,
-        "average_rep": 2
-      },
-      "neck-rotation": {
-        "name": "Neck Rotation",
-        "type": 1,
-        "base_reps": 8,
-        "average_rep": 2
-      },
-      "lunges": {
-          "name": "Lunges",
-          "type": 1,
-          "base_reps": 10,
-          "average_rep": 2
-      },
-      "hamstring-stretch": {
-        "name": "Hamstring Stretch",
-        "type": 1,
-        "base_reps": 8,
-        "average_rep": 2
-      },
-      "quad-stretch": {
-        "name": "Quad Stretch",
-        "type": 1,
-        "base_reps": 10,
-        "average_rep": 2
-      },
-      "calf-stretch": {
-        "name": "Calf Stretch",
-        "type": 1,
-        "base_reps": 8,
-        "average_rep": 2
-          
       }
     }
   }
