@@ -11,9 +11,15 @@ const exerciseDetails = document.querySelector('#exercise-details-label');
 const exerciseAverageTime = document.querySelector('#timelength');
 const exerciseIntensity = document.querySelector('#exercise-intensity');
 const confirmExercise = document.querySelector('#confirm-exercise-modal');
+const timeLength = document.querySelector('#timelength');
+const uploadWorkout = document.querySelector('#uploadworkout');
+const startAndUpload = document.querySelector('#startandupload');
+const backButton = document.querySelector('#backbutton');
 const currentWorkout = {};
+const currentWorkoutArr = [];
 let exerciseIndex = 0;
 let exerciseData;
+let currentExerciseCard;
 async function main() {
   confirmExercise.addEventListener('click', () => {
     exerciseIntensity.close();
@@ -22,22 +28,17 @@ async function main() {
     method: 'GET',  
     }
   );
-
-  let newOption;
   exerciseData = await response.json();
   buildWorkoutMenu(exerciseData);
 }
 function appendExercisetoRoutine(e) {
-  const existingCard = e.currentTarget;
   exerciseInput.removeEventListener('input', () => {});
-
-
+  currentExerciseCard = e.currentTarget;
   const exerciseIntensity = document.querySelector('#exercise-intensity');
   exerciseIntensity.showModal();
   const specificExercise = exerciseData[e.currentTarget.parentElement.id]['activities'][e.currentTarget.id];
   let averageTime;
   console.log(exerciseData);
-  const timeLength = document.querySelector('#timelength');
   const isReps = Object.keys(specificExercise).indexOf('base_reps') !== -1;
   if (isReps) {
     exerciseDetails.textContent = 'How many reps would you like to do?';
@@ -60,24 +61,15 @@ function appendExercisetoRoutine(e) {
       averageTime = `${averageTime} seconds`;
     };
     timeLength.textContent = `This will take around ${averageTime} to complete`; 
+    timeLength.data = averageTime;
     if (exerciseInput.value >= 0) {
       confirmExercise.disabled = false;
     } else {
       
     }
   });
-
 }
 
-confirmExercise.addEventListener('click', (ev) => {
-  console.log(existingCard);
-  const duplicateExerciseCard = existingCard.cloneNode(true);
-  duplicateExerciseCard.textContent = `${existingCard.textContent} for ${averageTime}`;
-  console.log(duplicateExerciseCard);
-  duplicateExerciseCard.id = exerciseIndex++ // adding an id to the exercise card eg. 0
-  exerciseRoutine.appendChild(duplicateExerciseCard);
-  
-});
 function buildWorkoutMenu(exerciseData) {
   let exerciseCategoryContainer;
   let exerciseCategoryTitle;
@@ -103,15 +95,12 @@ function buildWorkoutMenu(exerciseData) {
     }
   exerciseOptions.appendChild(exerciseCategoryContainer);
   }
-
-  addButton.addEventListener('click', addExerciseRoutine);
-  confirmWorkoutName.addEventListener('click', startExerciseRoutineCreation);
-  
 }
-function addExerciseRoutine() {
-  console.log(screens);
-  screens.item(0).classList.remove("active");
-  screens.item(1).classList.add("active");
+function changeScreenTo(screen) {
+  const activeScreen = document.querySelector('.screen.active');
+  activeScreen.classList.remove('active');
+  screens[screen].classList.add('active');
+
 }
 function startExerciseRoutineCreation() {
   const phases = document.querySelectorAll('.subscreen'); // all subscrens will be the phases of creating a routine
@@ -120,7 +109,24 @@ function startExerciseRoutineCreation() {
   console.log(phases);
   currentWorkout[exerciseName.value] = []; // current workout creation.
 }
+addButton.addEventListener('click', () => {
+  changeScreenTo(1);
+});
+confirmWorkoutName.addEventListener('click', startExerciseRoutineCreation);
 
+confirmExercise.addEventListener('click', (ev) => {
+  // const existingCard =
+  const duplicateExerciseCard = currentExerciseCard.cloneNode(true);
+  let averageTime = timeLength.data;
+  duplicateExerciseCard.textContent = `${currentExerciseCard.textContent} for ${averageTime}`;
+  console.log(duplicateExerciseCard);
+  duplicateExerciseCard.id = exerciseIndex++ // adding an id to the exercise card eg. 0
+  exerciseRoutine.appendChild(duplicateExerciseCard);
+  currentWorkoutArr.push([currentExerciseCard.textContent, averageTime]);
+});
+startAndUpload.addEventListener('click', () => {
+  changeScreenTo(2);
+});
 
 
 

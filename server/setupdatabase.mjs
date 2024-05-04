@@ -20,8 +20,9 @@ const connect = init();
  */
 async function initDataBase() {
   const db = await connect;
+  await db.run("DROP TABLE IF EXISTS WorkoutRoutines;");
+  await db.run("DROP TABLE IF EXISTS Workouts;");
   await db.run("DROP TABLE IF EXISTS Accounts;");
-  await db.run("DROP TABLE IF EXISTS Pets;");
   console.log("Database set up!");
 }
 
