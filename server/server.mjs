@@ -20,16 +20,9 @@ app.get("/", (req, res) => {
 });
 app.get ("/api/workouts", async (req, res) => {
   const exercises = await getExercises()
-  console.log(exercises)
-  
   res.json(exercises)
 })
-app.get("/dashboard", (req, res) => {
-  send(res, "/client/dashboard/dashboard.html");
-});
-app.get("/exercise", (req, res) => {
-  send(res, "/client/exercise/exercise.html");
-});
+
 app.post("/googleauth"),
   async (req, res) => {
     googleAuth(req.body);
