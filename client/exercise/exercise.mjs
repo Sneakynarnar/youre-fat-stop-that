@@ -15,8 +15,12 @@ const timeLength = document.querySelector('#timelength');
 const uploadWorkout = document.querySelector('#uploadworkout');
 const startAndUpload = document.querySelector('#startandupload');
 const backButton = document.querySelector('#backbutton');
+const routineTime = document.querySelector('#routinetime');
 const currentWorkout = {};
-const currentWorkoutArr = [];
+let currentWorkoutArr = [];
+let restAmount = 10;
+let totalTimeLeft = 0;
+let workoutTimeLeft = 0;
 let exerciseIndex = 0;
 let exerciseData;
 let currentExerciseCard;
@@ -30,6 +34,26 @@ async function main() {
   );
   exerciseData = await response.json();
   buildWorkoutMenu(exerciseData);
+}
+/**
+ * @param {number} seconds
+ * @returns {string}
+ */
+function formatSeconds(seconds) {
+  let minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const formattedSeconds = remainingSeconds == 1 ? `${remainingSeconds} second` : `${remainingSeconds} seconds`;
+  const formattedMinutes = minutes == 1 ? `${minutes} minute` : `${minutes} minutes`;
+  return `${formattedMinutes} and ${formattedSeconds}`;
+}
+
+function getTotalTime() {
+  return currentWorkoutArr.reduce((acc, curr) => { return acc + curr[1] + restAmount}, 0);
+}
+function updateTotalTime() {
+  const totalTime = getTotalTime();
+  const formattedTime = formatSeconds(totalTime);
+  routineTime.textContent = `Total time: ${formattedTime}`;
 }
 function appendExercisetoRoutine(e) {
   exerciseInput.removeEventListener('input', () => {});
@@ -51,21 +75,13 @@ function appendExercisetoRoutine(e) {
     } else {
       averageTime = exerciseInput.value;
     }
-    if (averageTime > 59){
-      let averageMinutes = Math.floor(averageTime / 60);
-      averageMinutes = averageMinutes == 1 ? `${averageMinutes} minute` : `${averageMinutes} minutes` ;
-      let averageSeconds = averageTime % 60;
-      averageSeconds = averageSeconds == 1 ? `${averageSeconds} second` : `${averageSeconds} seconds`;
-      averageTime = `${averageMinutes} and ${averageSeconds}`;
-    } else {
-      averageTime = `${averageTime} seconds`;
-    };
-    timeLength.textContent = `This will take around ${averageTime} to complete`; 
     timeLength.data = averageTime;
+    const formattedSeconds = formatSeconds(averageTime);
+    timeLength.textContent = `This exercise will take approximately ${formattedSeconds} to complete.`;
     if (exerciseInput.value >= 0) {
       confirmExercise.disabled = false;
     } else {
-      
+      confirmExercise.disabled = true;
     }
   });
 }
@@ -100,9 +116,10 @@ function changeScreenTo(screen) {
   const activeScreen = document.querySelector('.screen.active');
   activeScreen.classList.remove('active');
   screens[screen].classList.add('active');
-
 }
 function startExerciseRoutineCreation() {
+  exerciseIndex = 0;
+  currentWorkoutArr = [];
   const phases = document.querySelectorAll('.subscreen'); // all subscrens will be the phases of creating a routine
   phases.item(0).classList.remove("active"); 
   phases.item(1).classList.add("active"); // changing phases
@@ -117,16 +134,62 @@ confirmWorkoutName.addEventListener('click', startExerciseRoutineCreation);
 confirmExercise.addEventListener('click', (ev) => {
   // const existingCard =
   const duplicateExerciseCard = currentExerciseCard.cloneNode(true);
-  let averageTime = timeLength.data;
+  let averageTime = formatSeconds(timeLength.data);
   duplicateExerciseCard.textContent = `${currentExerciseCard.textContent} for ${averageTime}`;
-  console.log(duplicateExerciseCard);
   duplicateExerciseCard.id = exerciseIndex++ // adding an id to the exercise card eg. 0
   exerciseRoutine.appendChild(duplicateExerciseCard);
-  currentWorkoutArr.push([currentExerciseCard.textContent, averageTime]);
+  currentWorkoutArr.push([currentExerciseCard.textContent, timeLength.data]);
+  exerciseInput.value = '';
+  updateTotalTime();
 });
 startAndUpload.addEventListener('click', () => {
   changeScreenTo(2);
+  startExercise()
 });
+
+
+function startExercise() {
+  const currentExerciseContainer = document.querySelector('#exercise');
+  let totalSecondsPassed = 0;
+  const exerciseTimer = document.querySelector('.timer1');
+  const workoutTimer = document.querySelector('.timer2');
+  totalTimeLeft = getTotalTime();
+  const timer = setInterval(() => {
+    totalTimeLeft--;
+    exerciseTimer.textContent = formatSeconds(totalTimeLeft);
+    if (totalTimeLeft <= 0) {
+      clearInterval(timer);
+      exerciseCard.remove();
+    }
+  }, 1000);
+  let rested = true;
+  const timer2 = setInterval(() => {
+    totalSecondsPassed++
+    if (workoutTimeLeft <= 0 && rested) { 
+    workout = currentWorkoutArr.shift();
+    workoutTimeLeft = workout[1];
+    console.log('workoutTimeLeft: ', workoutTimeLeft);
+    console.log('workout: ', workout);
+    workoutTimer.textContent = formatSeconds(workoutTimeLeft);
+    exercise.textContent = workout[0];
+    rested = false;
+    } else if (workoutTimeLeft <= 0) {
+      workoutTimeLeft = restAmount;
+      currentExerciseContainer.textContent = "Rest!";
+      rested = true;
+    } else {
+      workoutTimeLeft--;
+      workoutTimer.textContent = formatSeconds(workoutTimeLeft);
+    }
+  if (currentWorkoutArr.length === 0 && workoutTimeLeft <= 0) {
+    clearInterval(timer2);
+    workoutTimer.textContent = 'Workout Complete!';
+    console.log('totalSecondsPassed: ', totalSecondsPassed);
+    
+    return;
+  }
+  }, 1000);
+}
 
 
 
