@@ -4,46 +4,52 @@
     "activities": {
       "shoulder-stretch": {
         "name": "Shoulder Stretch",
+        "description": "Stretch your shoulder muscles to improve flexibility and prevent injuries.",
         "type": 1,
         "base_reps": 10,
         "average_rep": 2
       },
       "toe-touch": {
         "name": "Toe Touch",
+        "description": "Bend forward and touch your toes to stretch your hamstrings and lower back.",
         "type": 1,
         "base_reps": 5,
         "average_rep": 2
       },
       "neck-rotation": {
         "name": "Neck Rotation",
+        "description": "Rotate your neck gently to release tension and improve neck mobility.",
         "type": 1,
         "base_reps": 8,
         "average_rep": 2
       },
       "lunges": {
-          "name": "Lunges",
-          "type": 1,
-          "base_reps": 10,
-          "average_rep": 2
+        "name": "Lunges",
+        "description": "Perform lunges to strengthen your leg muscles and improve balance.",
+        "type": 1,
+        "base_reps": 10,
+        "average_rep": 2
       },
       "hamstring-stretch": {
         "name": "Hamstring Stretch",
+        "description": "Stretch your hamstrings to improve flexibility and prevent muscle tightness.",
         "type": 1,
         "base_reps": 8,
         "average_rep": 2
       },
       "quad-stretch": {
         "name": "Quad Stretch",
+        "description": "Stretch your quadriceps muscles to improve flexibility and prevent injuries.",
         "type": 1,
         "base_reps": 10,
         "average_rep": 2
       },
       "calf-stretch": {
         "name": "Calf Stretch",
+        "description": "Stretch your calf muscles to improve flexibility and prevent muscle tightness.",
         "type": 1,
         "base_reps": 8,
         "average_rep": 2
-          
       }
     }
   },
@@ -52,28 +58,33 @@
     "activities": {
       "jumping-jacks": {
         "name": "Jumping Jacks",
+        "description": "Perform jumping jacks to elevate your heart rate and improve cardiovascular fitness.",
         "type": 1,
         "base_reps": 5,
         "average_rep": 2
       },
       "onspot-jogging": {
         "name": "Jogging in place",
+        "description": "Jog in place to get your heart rate up and burn calories.",
         "type": 2,
         "base_time": 10
       },
       "push-ups": {
         "name": "Push-Ups",
+        "description": "Perform push-ups to strengthen your upper body muscles, including chest, shoulders, and triceps.",
         "type": 2,
         "base_time": 10
       },
       "burpees": {
         "name": "Burpees",
+        "description": "Perform burpees to work multiple muscle groups and improve cardiovascular fitness.",
         "type": 1,
         "base_reps": 10,
         "average_rep": 3
       },
       "mountain-climbers": {
         "name": "Mountain Climbers",
+        "description": "Perform mountain climbers to engage your core muscles and improve cardiovascular endurance.",
         "type": 1,
         "base_reps": 10,
         "average_rep": 2
@@ -85,28 +96,33 @@
     "activities": {
       "walk": {
         "name": "Walk",
+        "description": "Go for a walk to improve cardiovascular health and enjoy the outdoors.",
         "type": 2,
         "base_time": 15
       },
       "run": {
         "name": "Run",
+        "description": "Go for a run to improve cardiovascular fitness and build endurance.",
         "type": 2,
         "base_time": 15,
         "rests": 2
       },
       "bicycle": {
         "name": "Bicycle",
+        "description": "Ride a bicycle to improve cardiovascular fitness and strengthen leg muscles.",
         "type": 2,
         "base_time": 15
       },
       "jump-rope": {
         "name": "Jump Rope",
+        "description": "Jump rope to improve cardiovascular fitness, coordination, and agility.",
         "type": 1,
         "base_reps": 50,
         "average_rep": 1
       },
       "hiking": {
         "name": "Hiking",
+        "description": "Go hiking to enjoy nature, burn calories, and improve cardiovascular fitness.",
         "type": 2,
         "base_time": 30
       }
@@ -117,18 +133,21 @@
     "activities": {
       "curls": {
         "name": "Curls",
+        "description": "Perform curls to strengthen your biceps muscles.",
         "type": 1,
         "base_reps": 10,
         "average_rep": 2
       },
       "bench-press": {
         "name": "Bench Press",
+        "description": "Perform bench press to strengthen your chest, shoulders, and triceps muscles.",
         "type": 1,
         "base_reps": 8,
         "average_rep": 2
       },
       "squats": {
         "name": "Squats",
+        "description": "Perform squats to strengthen your leg muscles, including quadriceps, hamstrings, and glutes.",
         "type": 1,
         "base_reps": 12,
         "average_rep": 2

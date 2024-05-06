@@ -13,10 +13,21 @@ const exerciseIntensity = document.querySelector('#exercise-intensity');
 const confirmExercise = document.querySelector('#confirm-exercise-modal');
 const timeLength = document.querySelector('#timelength');
 const uploadWorkout = document.querySelector('#uploadworkout');
-const startAndUpload = document.querySelector('#startandupload');
+const start = document.querySelector('#startandupload');
 const backButton = document.querySelector('#backbutton');
 const routineTime = document.querySelector('#routinetime');
+const cancelExercise = document.querySelector('#cancel-exercise-modal');
+const startExerciseButton = document.querySelector('#startexercise');
+const workoutComplete = document.querySelector('#workoutcomplete');
+const exercise = document.querySelector('#exercise');
+const backToDashboardButton = document.querySelector('#backtodashboard');
+const workoutAgainButton = document.querySelector('#workoutagain');
+const pausePlayButton = document.querySelector('#pauseplay');
+const stopExerciseButton = document.querySelector('#stopexercise');
+const completetitle = document.querySelector('#completetitle');
+const completeMessage = document.querySelector('#completemessage');
 const currentWorkout = {};
+let timer1, timer2;
 let currentWorkoutArr = [];
 let restAmount = 10;
 let totalTimeLeft = 0;
@@ -48,11 +59,17 @@ function formatSeconds(seconds) {
 }
 
 function getTotalTime() {
-  return currentWorkoutArr.reduce((acc, curr) => { return acc + curr[1] + restAmount}, 0);
+  console.log('currentWorkoutArr: ', currentWorkoutArr);
+  
+  return currentWorkoutArr.reduce((acc, curr) => { return acc + Number(curr[1]) + restAmount}, 0) - restAmount;
 }
 function updateTotalTime() {
   const totalTime = getTotalTime();
   const formattedTime = formatSeconds(totalTime);
+  if (totalTime === 0) {
+    routineTime.textContent = '';
+    return;
+  }
   routineTime.textContent = `Total time: ${formattedTime}`;
 }
 function appendExercisetoRoutine(e) {
@@ -115,7 +132,7 @@ function buildWorkoutMenu(exerciseData) {
 function changeScreenTo(screen) {
   const activeScreen = document.querySelector('.screen.active');
   activeScreen.classList.remove('active');
-  screens[screen].classList.add('active');
+  screens[screen-1].classList.add('active');
 }
 function startExerciseRoutineCreation() {
   exerciseIndex = 0;
@@ -127,7 +144,7 @@ function startExerciseRoutineCreation() {
   currentWorkout[exerciseName.value] = []; // current workout creation.
 }
 addButton.addEventListener('click', () => {
-  changeScreenTo(1);
+  changeScreenTo(2);
 });
 confirmWorkoutName.addEventListener('click', startExerciseRoutineCreation);
 
@@ -139,43 +156,58 @@ confirmExercise.addEventListener('click', (ev) => {
   duplicateExerciseCard.id = exerciseIndex++ // adding an id to the exercise card eg. 0
   exerciseRoutine.appendChild(duplicateExerciseCard);
   currentWorkoutArr.push([currentExerciseCard.textContent, timeLength.data]);
-  exerciseInput.value = '';
+  exerciseInput.value = '1';
   updateTotalTime();
 });
-startAndUpload.addEventListener('click', () => {
-  changeScreenTo(2);
-  startExercise()
+start.addEventListener('click', () => {
+  changeScreenTo(3);
+  
+});
+cancelExercise.addEventListener('click', () => {
+  exerciseIntensity.close();
 });
 
+startExerciseButton.addEventListener('click', () => {
+  changeScreenTo(4);
+  startExercise();
+});
+
+workoutAgainButton.addEventListener('click', stopExercise);
+backToDashboardButton.addEventListener('click', () => {
+  exerciseRoutine.innerHTML = '';
+  routineTime.textContent = '';
+  currentWorkoutArr = [];
+  changeScreenTo(1);
+});
+
+backToDashboardButton.addEventListener('click', () => {
+  window.location.href = 'http://localhost:8080/dashboard';
+});
 
 function startExercise() {
+  let paused = false;
+  workoutComplete.classList.add('hidden');
   const currentExerciseContainer = document.querySelector('#exercise');
   let totalSecondsPassed = 0;
   const exerciseTimer = document.querySelector('.timer1');
   const workoutTimer = document.querySelector('.timer2');
-  totalTimeLeft = getTotalTime();
-  const timer = setInterval(() => {
-    totalTimeLeft--;
-    exerciseTimer.textContent = formatSeconds(totalTimeLeft);
-    if (totalTimeLeft <= 0) {
-      clearInterval(timer);
-      exerciseCard.remove();
-    }
-  }, 1000);
+  const buttons = document.querySelector('#buttons');
+  const totalTime = getTotalTime() - 1;
+  buttons.classList.remove('hidden');
+  totalTimeLeft = totalTime + currentWorkoutArr.length;
   let rested = true;
-  const timer2 = setInterval(() => {
+  function workoutTimerFunc() {
     totalSecondsPassed++
     if (workoutTimeLeft <= 0 && rested) { 
     workout = currentWorkoutArr.shift();
     workoutTimeLeft = workout[1];
-    console.log('workoutTimeLeft: ', workoutTimeLeft);
-    console.log('workout: ', workout);
     workoutTimer.textContent = formatSeconds(workoutTimeLeft);
     exercise.textContent = workout[0];
     rested = false;
     } else if (workoutTimeLeft <= 0) {
-      workoutTimeLeft = restAmount;
+      workoutTimeLeft = restAmount-1;
       currentExerciseContainer.textContent = "Rest!";
+      workoutTimer.textContent = formatSeconds(workoutTimeLeft);
       rested = true;
     } else {
       workoutTimeLeft--;
@@ -184,13 +216,53 @@ function startExercise() {
   if (currentWorkoutArr.length === 0 && workoutTimeLeft <= 0) {
     clearInterval(timer2);
     workoutTimer.textContent = 'Workout Complete!';
-    console.log('totalSecondsPassed: ', totalSecondsPassed);
-    
+    completetitle.textContent = 'You did alright, I guess...';
+    completeMessage.textContent = "You are 1 step closer to stopping your fatness."
+    workoutComplete.classList.remove('hidden');
+    buttons.classList.add('hidden');
     return;
   }
+  }
+  function exerciseTimerFunc() {
+    exerciseTimer.textContent = formatSeconds(totalTimeLeft);
+    if (totalTimeLeft <= 0) {
+      clearInterval(timer1);
+      }
+      totalTimeLeft--;
+    }
+
+  pausePlayButton.addEventListener('click', () => {
+    if (paused) {
+      paused = false;
+      pausePlayButton.textContent = 'Pause';
+      timer1 = setInterval(() => {
+        exerciseTimerFunc();
+      }, 1000);
+      timer2 = setInterval(() => {
+        workoutTimerFunc();
+      }, 1000);
+    } else {
+      paused = true;
+      pausePlayButton.textContent = 'Play';
+      clearInterval(timer1);
+      clearInterval(timer2);
+    }
+  });
+  timer1 = setInterval(() => {
+    exerciseTimerFunc();
+  }, 1000);
+  timer2 = setInterval(() => {
+    workoutTimerFunc();
   }, 1000);
 }
 
-
+function stopExercise() {
+  clearInterval(timer1);
+  clearInterval(timer2);
+  completetitle.textContent = 'Imagine quitting, smh';
+  completeMessage.textContent = 'You stopped the workout early? You are a disgrace to your family. You think you can just stop a workout and get away with it? You are a coward and a fool. You will never be able to show your face in public again. You are a failure. You are a disgrace. You wonder why your wife left you? It is because you are a quitter and you quit.';
+  workoutComplete.classList.remove('hidden');
+  buttons.classList.add('hidden');
+}
 
 main()

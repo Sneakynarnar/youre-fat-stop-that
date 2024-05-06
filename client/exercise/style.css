@@ -1,7 +1,9 @@
 body {
   display: flex
 }
-
+.hidden {
+  display: none;
+}
 .subscreen,
 .screen {
   display: none;

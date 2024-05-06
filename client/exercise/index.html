@@ -32,24 +32,38 @@
           <input id="exercise-details-input" type="number">
           <p id="timelength"></p>
           <button id="confirm-exercise-modal" disabled>Confirm</button>
+          <button id="cancel-exercise-modal">Cancel</button>
         </form>
       </dialog>
-      <button id="uploadworkout">Upload</button>
-      <button id="startandupload">Upload and Start</button>
+      <input id="upload" type="checkbox" id="upload">
+      <button id="start">Start</button>
       <button id="backbutton">Back</button>
     </div>
 
   </section>
   <section id="screen3" class="screen">
+    <button id="startexercise">Start the exercise!</button>
+  </section>
+  <section id="screen4" class="screen">
     <div id="main">
       <div id="exercisecontainer">
-        <div id="exerciseinfo"></div>
         <div id="exercise"></div>
       <div id="timer">
         <p class="timer1">00:00</p>
         <p class="timer2">00:00</p>
       </div>
-  </section>
+      <div id="buttons">
+        <button id="pauseplay">Pause</button>
+        <button id="stopexercise">Stop (i'm weak)</button>
+      </div>
+    </div>
 
+    <div id ="workoutcomplete" class="hidden">
+      <h1 id="completetitle">You did alright I guess...</h1>
+      <p id ="completemessage">You are 1 step closer to not being fat!</p>
+    <button id="backtodashboard">Go back to dashboard</button>
+    <button id="workoutagain">Do another workout</button>
+    </div>
+  </section>
 </body>
 </html>
