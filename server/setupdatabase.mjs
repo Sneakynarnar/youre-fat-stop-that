@@ -21,17 +21,22 @@ const connect = init();
  */
 async function initDataBase() {
   const db = await connect;
-  await db.run("DROP TABLE IF EXISTS WorkoutRoutines;");
-  await db.run("DROP TABLE IF EXISTS Workouts;");
-  await db.run("DROP TABLE IF EXISTS Accounts;");
-  
-  await db.run(`CREATE TABLE Accounts (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT NOT NULL,
-    password TEXT NOT NULL
+  db.run("DROP TABLE IF EXISTS WorkoutRoutines;");
+  db.run("DROP TABLE IF EXISTS Workouts;");
+  db.run("DROP TABLE IF EXISTS Accounts;");
+  db.run(`CREATE TABLE IF NOT EXISTS Accounts (
+    id INTEGER PRIMARY KEY,
+    streak INTEGER NOT NULL DEFAULT 0,
+    username TEXT NOT NULL,
+    totalminutedone INTEGER NOT NULL DEFAULT 0,
+    totalworkoutsdone INTEGER NOT NULL DEFAULT 0,
+    totalworkoutscreated INTEGER NOT NULL DEFAULT 0,
+    minutesthisweek INTEGER NOT NULL DEFAULT 0,
+    minutestoday INTEGER NOT NULL DEFAULT 0,
+    date_created TEXT DEFAULT CURRENT_TIMESTAMP
   );`);
 
-  await db.run(`CREATE TABLE Workouts (
+  db.run(`CREATE TABLE IF NOT EXISTS Workouts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -42,7 +47,7 @@ async function initDataBase() {
     average_rep INTEGER
   );`);
 
-  await db.run(`CREATE TABLE WorkoutRoutines (
+  db.run(`CREATE TABLE IF NOT EXISTS WorkoutRoutines (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     account_id INTEGER NOT NULL,
     workout_id INTEGER NOT NULL,
@@ -56,13 +61,15 @@ async function initDataBase() {
 export async function exerciseFromJson() {
   const exerciseData = JSON.parse(await fs.readFile('./server/exercises.json', 'utf-8'));
   const db = await connect;
+  try {
   for (const [workoutCategory, categoryData] of Object.entries(exerciseData)) {
     for (const [workoutName, workoutData] of Object.entries(categoryData.activities)) {
-
-      await db.run(`INSERT INTO Workouts (name, description, category, type, base_time, base_reps, average_rep) VALUES (?, ?, ?, ?, ?, ?, ?);`, [workoutName, workoutData.description, workoutCategory, workoutData.type, workoutData.base_time, workoutData.base_reps, workoutData.average_rep]);
+      db.run(`INSERT INTO Workouts (name, description, category, type, base_time, base_reps, average_rep) VALUES (?, ?, ?, ?, ?, ?, ?);`, [workoutName, workoutData.description, workoutCategory, workoutData.type, workoutData.base_time, workoutData.base_reps, workoutData.average_rep]);
     }
   }
-}
-
+  } catch (error) {
+    console.error(error);
+    }
+  }
 await initDataBase();
-await exerciseFromJson();
+// await exerciseFromJson();

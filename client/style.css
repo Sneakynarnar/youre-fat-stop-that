@@ -15,6 +15,23 @@ body {
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+.g_id_signin {
+  /* button for signing in */
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #4285f4;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.g_id_signin:hover {
+  background-color: #3367d6;
+}
 
 .emphasis {
   color: red;

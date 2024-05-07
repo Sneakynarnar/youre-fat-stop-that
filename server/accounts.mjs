@@ -1,4 +1,6 @@
 import fs from 'fs/promises'
+import { init } from './setupdatabase.mjs'
+const connect = init()
 const jsonData = await fs.readFile('server/exercises.json')
 const exercises = JSON.parse(jsonData)
 /** 
@@ -27,4 +29,14 @@ export async function generatePersonalisedExercises(userID, time, exercise) { //
   }
   for(const exercise in getExerciseActivities("warmup"))
     personalisedExercises.warmup_routine.push(exercise)
+}
+
+export async function handleUserLogin() {
+  const db = await connect;
+  const userExists = !!(db.get('SELECT * FROM Accounts WHERE username = ?;', [username]));
+  if (userExists) {
+    return true;
+  } else {
+    db.run('INSERT INTO Accounts (id,   ')
+  }
 }

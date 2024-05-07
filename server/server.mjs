@@ -2,25 +2,32 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import { load_dotenv } from "./dotenv.mjs";
-import { getExercises } from "./accounts.mjs";
-import { uuidv4 } from "uuidv4"
-import OAuth2Client from "google-auth-library";
+import { getExercises, handleUserLogin } from "./accounts.mjs";
+import uuidv4 from "uuidv4";
+import { OAuth2Client } from "google-auth-library"; // stictly for verification
 import { init } from "./setupdatabase.mjs";
+import jwt from "jsonwebtoken";
+import { decode } from "punycode";
 //import open from 'open';
 const connect = init()
 const app = express();
 const port = 8080;
-const client = new OAuth2Client(env_data.GOOGLE_CLIENT_ID);
 const env_data = await load_dotenv();
+const client = new OAuth2Client(env_data.GOOGLE_CLIENT_ID);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(path.dirname(__filename));
 function send(res, fp) {
   res.sendFile(path.join(__dirname, fp));
 }
+
+app.use(cookieParser);
+app.use("/dashboard", authenticateToken)
+app.use("/profile", authenticateToken)
+app.use("/exercise", authenticateToken)
 app.use("/", express.static(path.join(__dirname, "/client")));
 app.use(express.json());
 app.get ("/api/workouts", async (req, res) => {
-  const exercises = await getExercises()
+  const exercises = await getExercises() 
   res.json(exercises)
 })
 
@@ -45,7 +52,7 @@ app.listen(port, () => {
 
 async function storeWorkout(workoutData) {
   const db = await connect
-  const workoutId = uuidv4();
+  const workoutId = uuidv4(); // generate a unique id for the workout
   let exerciseExists = false
   for (const exercise of workoutData.workout) {
     
@@ -58,23 +65,66 @@ async function storeWorkout(workoutData) {
   return true;
 }
 
-app.post('/verify', async (req, res) => {
-  const token = req.body.idToken;
+app.post('/api/verify', async (req, res) => {
+  console.log('verifying token');
+  
   try {
+    const idtoken = req.body.idToken;
     const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: load_dotenv.GOOGLE_CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+      idToken: idtoken,
+      audience: env_data.GOOGLE_CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
     });
     const payload = ticket.getPayload();
     const userid = payload['sub'];
-    // If request specified a G Suite domain:
-    // const domain = payload['hd'];
-
-    // Send a success response
-    res.status(200).json({ message: 'Verification successful', userid: userid });
+    await handleUserLogin(userid);
+    const token = jwt.sign({ userid: userid }, env_data.JWT_SECRET, { expiresIn: '1h' });
+    console.log('token: ', token);
+    
+    res.cookie('token', token, { httpOnly: true, sameSite: 'strict'}) // using cookies instead of local storage to prevent XSS attacks
+    // however, cookies are vulnerable to CSRF attacks which is why i set the sameSite attribute to strict
+    console.log('token: ', token);
   } catch (error) {
-    // Send an error response
-    res.status(401).json({ message: 'Verification failed', error: error.toString() });
+    res.status(401).json({ message: 'Verification failed', error: error.toString()});
   }
 });
 
+function authenticateToken(req,res,next) { // middleware function
+  const token = req.cookies.token;
+  
+  console.log('req.cookies: ', req.cookies);
+  
+  if (token == null) return res.sendStatus(401);
+  jwt.verify(token, env_data.JWT_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
+
+// function cookieParser(req, res, next) {
+//   const cookieHeader = req.headers['cookie'];
+//   console.log('cookieHeader: ', cookieHeader);
+//   const cookies = cookieHeader.split('; ');
+//   req.cookies = cookies.reduce((acc, cookie) => {
+//     const [key, value] = cookie.split('=');
+//     acc[key] = value;
+//     return acc;
+//   }, {});
+//   next();
+// }
+
+function cookieParser(req, res, next) {
+  req.cookies = {};
+  const cookieHeader = req.headers['cookie'];
+  if (cookieHeader) {
+    const cookies = cookieHeader.split('; ');
+    for (let i = 0; i < cookies.length; i++) {
+      const parts = cookies[i].split('=');
+      if (parts.length < 2) continue;
+      const name = decodeURIComponent(parts.shift().trim()); // remove whitespace and decode the name
+      const value = decodeURIComponent(parts[1]); // decode the value
+      req.cookies[name] = value;
+    }
+  }
+  next();
+}
