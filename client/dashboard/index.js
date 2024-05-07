@@ -9,6 +9,7 @@ const circle = document.querySelector("#a");
 const circle2 = document.querySelector("#b");
 const circle3 = document.querySelector("#c");
 const text = document.querySelectorAll(".progress-text");
+const outsideActivity = document.querySelector("#outsideActivity");
 const radius = circle.r.baseVal.value; // readius of the SVG circle metres
 const circumference = radius * 2 * Math.PI; // gets the circumference of the metres
 /**
@@ -45,6 +46,10 @@ function addListeners() {
     console.log("/exercise")
     window.location.href = "/exercise";
   });
+  outsideActivity.addEventListener("click", () => {
+    console.log("/exercise")
+    window.location.href = "/exercise/outside";
+  }
   for (r of [range, range2, range3]) {
     r.dispatchEvent(new Event("input"));
   }

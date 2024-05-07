@@ -14,8 +14,9 @@ Servers etc
 
 Copilot:" General Sign in with Google page for an app named "You're fat stop that" With some styling"
 
-chatgpt: "I want to implement a google Oauth3 log in to my web app, how would I do that?"
+chatgpt: "I want to implement a google Oauth2 log in to my web app, how would I do that?"
+
 
 ## server/server.mjs
-
 "Simple express server"
+How would you ensure a user continues to be logged in when navigating my web app?

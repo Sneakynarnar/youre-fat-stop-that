@@ -93,9 +93,12 @@ app.post('/api/verify', async (req, res) => {
 
 function authenticateToken(req,res,next) { // middleware function
   const token = req.cookies.token;
-  if (token == null) return res.sendStatus(401);
+  
+  console.log('req.cookies: ', req.cookies);
+  
+  if (token == null) return res.redirect('/');
   jwt.verify(token, env_data.JWT_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
+    if (err) return res.redirect('');
     req.user = user;
     
     next();
