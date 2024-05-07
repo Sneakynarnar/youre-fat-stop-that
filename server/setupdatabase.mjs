@@ -21,13 +21,13 @@ const connect = init();
  */
 async function initDataBase() {
   const db = await connect;
-  db.run("DROP TABLE IF EXISTS WorkoutRoutines;");
-  db.run("DROP TABLE IF EXISTS Workouts;");
-  db.run("DROP TABLE IF EXISTS Accounts;");
-  db.run(`CREATE TABLE IF NOT EXISTS Accounts (
-    id INTEGER PRIMARY KEY,
+  await db.run("DROP TABLE IF EXISTS WorkoutRoutines;");
+  await db.run("DROP TABLE IF EXISTS Workouts;");
+  await db.run("DROP TABLE IF EXISTS Accounts;");
+  await db.run(`CREATE TABLE IF NOT EXISTS Accounts (
+    id BIGINT PRIMARY KEY,
     streak INTEGER NOT NULL DEFAULT 0,
-    username TEXT NOT NULL,
+    username TEXT,
     totalminutedone INTEGER NOT NULL DEFAULT 0,
     totalworkoutsdone INTEGER NOT NULL DEFAULT 0,
     totalworkoutscreated INTEGER NOT NULL DEFAULT 0,
@@ -36,7 +36,7 @@ async function initDataBase() {
     date_created TEXT DEFAULT CURRENT_TIMESTAMP
   );`);
 
-  db.run(`CREATE TABLE IF NOT EXISTS Workouts (
+  await db.run(`CREATE TABLE IF NOT EXISTS Workouts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -47,7 +47,7 @@ async function initDataBase() {
     average_rep INTEGER
   );`);
 
-  db.run(`CREATE TABLE IF NOT EXISTS WorkoutRoutines (
+  await db.run(`CREATE TABLE IF NOT EXISTS WorkoutRoutines (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     account_id INTEGER NOT NULL,
     workout_id INTEGER NOT NULL,

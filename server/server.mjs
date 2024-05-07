@@ -76,27 +76,28 @@ app.post('/api/verify', async (req, res) => {
     });
     const payload = ticket.getPayload();
     const userid = payload['sub'];
-    await handleUserLogin(userid);
     const token = jwt.sign({ userid: userid }, env_data.JWT_SECRET, { expiresIn: '1h' });
-    console.log('token: ', token);
-    
     res.cookie('token', token, { httpOnly: true, sameSite: 'strict'}) // using cookies instead of local storage to prevent XSS attacks
     // however, cookies are vulnerable to CSRF attacks which is why i set the sameSite attribute to strict
-    console.log('token: ', token);
+    res.json({ message: 'Successfully verified', token: token });
+    const userStored = await handleUserLogin(userid);
+    console.log('userStored: ', userStored);
+    
   } catch (error) {
+    console.log('error: ', error.toString());
+    
     res.status(401).json({ message: 'Verification failed', error: error.toString()});
   }
+  
 });
 
 function authenticateToken(req,res,next) { // middleware function
   const token = req.cookies.token;
-  
-  console.log('req.cookies: ', req.cookies);
-  
   if (token == null) return res.sendStatus(401);
   jwt.verify(token, env_data.JWT_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
+    
     next();
   });
 }
@@ -113,7 +114,7 @@ function authenticateToken(req,res,next) { // middleware function
 //   next();
 // }
 
-function cookieParser(req, res, next) {
+function cookieParser(req, res, next) { // writing my own cookie parsere
   req.cookies = {};
   const cookieHeader = req.headers['cookie'];
   if (cookieHeader) {
@@ -122,7 +123,8 @@ function cookieParser(req, res, next) {
       const parts = cookies[i].split('=');
       if (parts.length < 2) continue;
       const name = decodeURIComponent(parts.shift().trim()); // remove whitespace and decode the name
-      const value = decodeURIComponent(parts[1]); // decode the value
+      const value = decodeURIComponent(parts.join('='));  // decode the value for example %20 to space
+      // joining the parts back together because the value can contain an equal sign
       req.cookies[name] = value;
     }
   }

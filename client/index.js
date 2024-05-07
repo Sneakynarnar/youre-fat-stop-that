@@ -9,7 +9,7 @@ script.addEventListener('load', () => {
   });
   google.accounts.id.renderButton(
     document.querySelector('.g_id_signin'),
-    { theme: 'outline', size: 'large' }  // customize the button appearance
+    { theme: 'outline', size: 'large' }  
   );
 });
 

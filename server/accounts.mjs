@@ -31,12 +31,16 @@ export async function generatePersonalisedExercises(userID, time, exercise) { //
     personalisedExercises.warmup_routine.push(exercise)
 }
 
-export async function handleUserLogin() {
+export async function handleUserLogin(id) {
   const db = await connect;
-  const userExists = !!(db.get('SELECT * FROM Accounts WHERE username = ?;', [username]));
+  const userExists = await db.get('SELECT * FROM Accounts WHERE id = ?;', [id]);
+  console.log('userExists', userExists);
+  
   if (userExists) {
-    return true;
+    return false;
   } else {
-    db.run('INSERT INTO Accounts (id,   ')
+    console.log('Creating new user with id: ', id);
+    db.run('INSERT INTO Accounts (id) VALUES (?);', [id]);
+    return true
   }
 }
