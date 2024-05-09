@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>A Simple Google Map</title>
+<link rel="stylesheet" href="style.css">
+<script defer src="index.js"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_mFV9BYDSmNZj8st6aUe15Vq-fwLUqQk&callback=setupGeoMap&v=weekly&libraries=marker" loading="async"></script>
+
+</head>
+
+<body>
+
+<nav id="navbar"></nav>
+<h1>Go the f*** outside</h1>
+
+<div id="map" style="width:600px; height: 400px;"></div>
+
+<input type=radio name="exerciseType" value="Run" id="run" checked>Run
+<input type=radio name="exerciseType" value="Walk" id="walk">Walk
+<input type=radio name="exerciseType" value="Bike" id="bike">Bike
+<button id="startExercise">Start Exercise</button>
+
+<div id="exerciseInfo" class="hidden">
+    <h2>Exercise Information</h2>
+    <p>Exercise Type: <span id="exerciseType"></span></p>
+    <p>Exercise Time Elapsed: <span id="exerciseTime"></span></p>
+    <p>Exercise Distance: <span id="exerciseDistance"></span></p>
+    <p>Exercise Calories: <span id="exerciseCalories"></span></p>
+    <p id="statusText" class="in-progress">Fat extermination in progress...</p>
+</div>
+</body>
+</html>
+
+<script>
+    fetch('../../navbar.html')
+      .then(response  => response.text())
+      .then((data) => {
+        console.log(data)
+        document.querySelector('#navbar').innerHTML = data;
+      });
+      
+  </script>
+

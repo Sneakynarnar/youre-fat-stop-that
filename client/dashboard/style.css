@@ -1,21 +1,64 @@
-
-
-
-body {
+main {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
 }
+
+h1 {
+  color: #333;
+}
+
 .progress-ring {
-  width: 10%;
-  height: 10%;
-} 
+  width: 100%;
+  height: 100%;
+}
 
 .progress-ring-circle {
   transform-origin: 250px 250px;
   transition: stroke-dashoffset 0.35s;
   transform: rotate(-90deg);
-  transform-origin: 50% 50%,
+  transform-origin: 50% 50%;
 }
 
+.hide {
+  display: none;
+
+}
+
+#metercontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+}
 .progress-text {
-  font: 4em serif;
+  font-size: 4em;
+  fill: #333;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button:active {
+  background-color: #003d80;
 }

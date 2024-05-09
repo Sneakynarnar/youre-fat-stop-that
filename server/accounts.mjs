@@ -22,16 +22,7 @@ async function getExerciseActivities(exercise) {
   return exercises[exercise].activities
 }
 
-export async function generatePersonalisedExercises(userID, time, exercise) { // instead of figuring out what the user wants let user pick the excercises
-  const personalisedExercises = {
-    warmup_routine: [],
-    excercise_routine: []
-  }
-  for(const exercise in getExerciseActivities("warmup"))
-    personalisedExercises.warmup_routine.push(exercise)
-}
-
-export async function handleUserLogin(id) {
+export async function handleUserLogin(id, email, name, imageUrl) {
   const db = await connect;
   const userExists = await db.get('SELECT * FROM Accounts WHERE id = ?;', [id]);
   console.log('userExists', userExists);
@@ -40,7 +31,13 @@ export async function handleUserLogin(id) {
     return false;
   } else {
     console.log('Creating new user with id: ', id);
-    db.run('INSERT INTO Accounts (id) VALUES (?);', [id]);
+    db.run('INSERT INTO Accounts (id, email, username, image) VALUES (?,?,?,?);', [id, email, name, imageUrl]);
     return true
   }
 }
+
+export async function getUser(id) {
+  const db = await connect;
+  return db.get('SELECT * FROM Accounts WHERE id = ?;', [id]);
+}
+

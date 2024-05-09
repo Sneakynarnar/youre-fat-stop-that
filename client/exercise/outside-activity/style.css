@@ -1,0 +1,51 @@
+
+.hidden {
+    display: none;
+}
+.in-progress {
+    color: #fc8600;
+  }
+  
+  .completed {
+    color: #28a745;
+  }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+  }
+  
+  
+  #map {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+  }
+  
+  input[type="radio"] {
+    margin: 0 10px 0 0;
+  }
+  
+  button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  #exerciseInfo {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  .hidden {
+    display: none;
+  }

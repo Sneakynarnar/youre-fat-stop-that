@@ -1,67 +1,59 @@
-const meter1 = document.querySelector("#activities");
-const meter2 = document.querySelector("#minutes");
-const meter3 = document.querySelector("#calories");
+const meter = document.querySelector("#minutestoday");
+const test = document.querySelector("#test");
 const startButton = document.querySelector("#startButton");
-const range = document.querySelector(".testslider");
-const range2 = document.querySelector(".testslider2");
-const range3 = document.querySelector(".testslider3");
 const circle = document.querySelector("#a");
-const circle2 = document.querySelector("#b");
-const circle3 = document.querySelector("#c");
 const text = document.querySelectorAll(".progress-text");
 const outsideActivity = document.querySelector("#outsideActivity");
 const radius = circle.r.baseVal.value; // readius of the SVG circle metres
 const circumference = radius * 2 * Math.PI; // gets the circumference of the metres
+let currentUser;
+// let meters =[circle, circle2, circle3];
 /**
  * Main procedure
  */
-function main() {
-  addListeners()
-  for (c of [circle, circle2, circle3]) {
+
+document.addEventListener("DOMContentLoaded", async () => {
+  currentUser = await fetch("http://localhost:8080/api/current_user").then((res) => res.json());
+  
+  document.querySelector("#nav-profile").src = currentUser.image;
+  document.querySelector("#profilelink").href = `/profile/${currentUser.id}`;
+  for (c of [circle]) {
+    console.log('c: ', c);
+    
     c.style.strokeDasharray = `${circumference} ${circumference}`;
     c.style.strokeDashoffset = circumference;
     setProgress(c, 0);
   }
-}
-
+  setMeters();
+});
 /**
  * Procedure for the event listeners to the input
  */
-function addListeners() {
-  range.addEventListener("input", () => {
-    setProgress(circle, range.value);
-    text.item(0).textContent = range.value + "%";
-  });
-  range2.addEventListener("input", () => {
-    setProgress(circle2, range2.value);
-    text.item(1).textContent = range2.value + "%";
-  });
-
-  range3.addEventListener("input", () => {
-    setProgress(circle3, range3.value);
-    text.item(2).textContent = range3.value + "%";
-  });
-
-  startButton.addEventListener("click", () => {
-    console.log("/exercise")
-    window.location.href = "/exercise";
-  });
-  outsideActivity.addEventListener("click", () => {
-    console.log("/exercise")
-    window.location.href = "/exercise/outside";
-  }
-  for (r of [range, range2, range3]) {
-    r.dispatchEvent(new Event("input"));
-  }
+function setMeters() {
+  console.log('currentUser.minutestoday: ', currentUser.minutestoday);
+  setProgress(circle, currentUser.minutestoday / 30 * 100);
+  text.item(0).textContent = Math.floor(currentUser.minutestoday) +  "/30 min"; // TODO: protect against NaN
 }
 /** Sets progress of the circle meter
  * @param {HTMLElement} meter SVG Circle meter element
  * @param {Number} percent Percentage completed
  */
 function setProgress(meter, percent) {
-  const offset = circumference - (percent / 100) * circumference;
+  console.log('percent: ', percent);
+  
+  const offset = circumference - (percent) / 100 * circumference;
   meter.style.strokeDashoffset = offset;
   // How much to offset the dashes in the css which correlates to how "complete" the circle is
 }
 
-main();
+test.addEventListener("input", () => {
+  setProgress(circle, test.value / 30 * 100);
+  text.item(0).textContent = test.value + " min";
+});
+
+startButton.addEventListener("click", () => {
+  window.location.href = "/exercise";
+});
+outsideActivity.addEventListener("click", () => {
+  window.location.href = "/exercise/outside-activity";
+});

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <nav id="navbar"></nav>
+  <title>Profile</title>
+  <script defer src="index.mjs"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <section id="profile-container">
+
+    </section>
+  </main>
+</body>
+</html>
+
+<script>
+  fetch('../navbar.html')
+    .then(response  => response.text())
+    .then((data) => {
+      console.log(data)
+      document.querySelector('#navbar').innerHTML = data;
+    });
+    
+</script>

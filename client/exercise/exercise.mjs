@@ -13,7 +13,7 @@ const exerciseIntensity = document.querySelector('#exercise-intensity');
 const confirmExercise = document.querySelector('#confirm-exercise-modal');
 const timeLength = document.querySelector('#timelength');
 const uploadWorkout = document.querySelector('#uploadworkout');
-const start = document.querySelector('#startandupload');
+const start = document.querySelector('#start');
 const backButton = document.querySelector('#backbutton');
 const routineTime = document.querySelector('#routinetime');
 const cancelExercise = document.querySelector('#cancel-exercise-modal');
@@ -26,6 +26,11 @@ const pausePlayButton = document.querySelector('#pauseplay');
 const stopExerciseButton = document.querySelector('#stopexercise');
 const completetitle = document.querySelector('#completetitle');
 const completeMessage = document.querySelector('#completemessage');
+const uploadCheckBox = document.querySelector('#upload');
+const exerciseRoutineDesc = document.querySelector('#exerciseroutinedesc');
+const uploadUi = document.querySelectorAll('.uploadroutine')
+const currentWorkoutName = document.querySelector('#workoutname');
+const exerciseRoutineName = document.querySelector('#exerciseroutinename');
 const currentWorkout = {};
 let timer1, timer2;
 let currentWorkoutArr = [];
@@ -35,7 +40,33 @@ let workoutTimeLeft = 0;
 let exerciseIndex = 0;
 let exerciseData;
 let currentExerciseCard;
+let currentUser;
+
+const urlParams = new URLSearchParams(window.location.search);
+const routine = urlParams.get('routine');
+// Use the extracted parameters as needed
+document.addEventListener('DOMContentLoaded', async () => {
+  currentUser = await fetch('http://localhost:8080/api/current_user', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  currentUser = await currentUser.json();
+  console.log('currentUser: ', currentUser);
+  
+});
 async function main() {
+  if (routine) {
+    const response = await fetch(`http://localhost:8080/api/getworkoutroutine/${routine}`, {
+      method: 'GET', 
+      headers: {
+        'Content-Type': 'application/json', 
+      }
+    });
+    const routineData = await response.json();
+    loadRoutine(routineData);
+  }
   confirmExercise.addEventListener('click', () => {
     exerciseIntensity.close();
   });
@@ -86,6 +117,8 @@ function appendExercisetoRoutine(e) {
   } else {
     exerciseDetails.textContent = 'How long would you like to do this exercise?';
   }
+  exerciseInput.value = '1'
+  timeLength.textContent = '';
   exerciseInput.addEventListener('input', () => {
     if (isReps) {
       averageTime = specificExercise['base_reps'] * exerciseInput.value;
@@ -138,6 +171,7 @@ function startExerciseRoutineCreation() {
   exerciseIndex = 0;
   currentWorkoutArr = [];
   const phases = document.querySelectorAll('.subscreen'); // all subscrens will be the phases of creating a routine
+  document.querySelector('#workoutname').textContent = exerciseRoutineName.value
   phases.item(0).classList.remove("active"); 
   phases.item(1).classList.add("active"); // changing phases
   console.log(phases);
@@ -149,7 +183,6 @@ addButton.addEventListener('click', () => {
 confirmWorkoutName.addEventListener('click', startExerciseRoutineCreation);
 
 confirmExercise.addEventListener('click', (ev) => {
-  // const existingCard =
   const duplicateExerciseCard = currentExerciseCard.cloneNode(true);
   let averageTime = formatSeconds(timeLength.data);
   duplicateExerciseCard.textContent = `${currentExerciseCard.textContent} for ${averageTime}`;
@@ -159,9 +192,67 @@ confirmExercise.addEventListener('click', (ev) => {
   exerciseInput.value = '1';
   updateTotalTime();
 });
-start.addEventListener('click', () => {
-  changeScreenTo(3);
+
+function regroupArray(arr) {
+  let regroupedArr = [];
+  let currentExercise = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (i % 2 === 0) {
+      currentExercise = [arr[i]];
+    } else {
+      currentExercise.push(arr[i]);
+      regroupedArr.push(currentExercise);
+    }
+  }
+  return regroupedArr;
+
+}
+function loadRoutine(routineData) {
+
+  uploadUi.forEach((element) => element.classList.add('hidden'));
+  document.querySelector('#workoutname').textContent = routineData.workout_name;
+  console.log('routineData: ', routineData);
+  exerciseName.value = routineData.workout_name;
+  exerciseRoutineDesc.value = routineData.description;
+  console.log('routineWorkout: ', routineData.workoutroutine);
+  currentWorkoutArr = routineData.workoutroutine.split(',');
+  console.log('currentWorkoutArr: ', currentWorkoutArr);
+  currentWorkoutArr = regroupArray(currentWorkoutArr);
   
+  currentWorkoutArr.forEach((exercise) => {
+    const exerciseCard = document.createElement('div');
+    exerciseCard.textContent = `${exercise[0]} for ${formatSeconds(exercise[1])}`;
+    exerciseCard.classList.add('exercise-panel');
+    exerciseRoutine.appendChild(exerciseCard);
+  });
+
+  changeScreenTo(2);
+  const phases = document.querySelectorAll('.subscreen');
+  phases.item(0).classList.remove("active"); 
+  phases.item(1).classList.add("active"); // changing phases
+  updateTotalTime();
+}
+
+
+start.addEventListener('click', async () => {
+  changeScreenTo(3);
+  if (uploadCheckBox.checked) {
+    const response = await fetch ('http://localhost:8080/api/uploadworkoutroutine', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        workoutName: exerciseName.value,
+        accountId: currentUser.id,
+        workout: currentWorkoutArr,
+        description: exerciseRoutineDesc.value
+      }),
+    });
+  await response.json()
+  console.log('response: ', response);
+    
+  }
 });
 cancelExercise.addEventListener('click', () => {
   exerciseIntensity.close();
@@ -172,8 +263,9 @@ startExerciseButton.addEventListener('click', () => {
   startExercise();
 });
 
-workoutAgainButton.addEventListener('click', stopExercise);
-backToDashboardButton.addEventListener('click', () => {
+stopExerciseButton.addEventListener('click', stopExercise);
+
+workoutAgainButton.addEventListener('click', () => {
   exerciseRoutine.innerHTML = '';
   routineTime.textContent = '';
   currentWorkoutArr = [];
@@ -184,7 +276,12 @@ backToDashboardButton.addEventListener('click', () => {
   window.location.href = 'http://localhost:8080/dashboard';
 });
 
-function startExercise() {
+backButton.addEventListener('click', () => {
+  window.location.href = 'http://localhost:8080/exercise';
+});
+
+async function startExercise() {
+
   let paused = false;
   workoutComplete.classList.add('hidden');
   const currentExerciseContainer = document.querySelector('#exercise');
@@ -196,7 +293,7 @@ function startExercise() {
   buttons.classList.remove('hidden');
   totalTimeLeft = totalTime + currentWorkoutArr.length;
   let rested = true;
-  function workoutTimerFunc() {
+  async function workoutTimerFunc() {
     totalSecondsPassed++
     if (workoutTimeLeft <= 0 && rested) { 
     workout = currentWorkoutArr.shift();
@@ -218,6 +315,18 @@ function startExercise() {
     workoutTimer.textContent = 'Workout Complete!';
     completetitle.textContent = 'You did alright, I guess...';
     completeMessage.textContent = "You are 1 step closer to stopping your fatness."
+    const response = await fetch('http://localhost:8080/api/workoutcompletion', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: {time: totalTime}
+    });
+
+    const data = await response.json();
+    console.log('response: ', data);
+    
+    
     workoutComplete.classList.remove('hidden');
     buttons.classList.add('hidden');
     return;
@@ -263,6 +372,7 @@ function stopExercise() {
   completeMessage.textContent = 'You stopped the workout early? You are a disgrace to your family. You think you can just stop a workout and get away with it? You are a coward and a fool. You will never be able to show your face in public again. You are a failure. You are a disgrace. You wonder why your wife left you? It is because you are a quitter and you quit.';
   workoutComplete.classList.remove('hidden');
   buttons.classList.add('hidden');
+  uploadUi.forEach((element) => element.classList.remove('hidden'));
 }
 
 main()

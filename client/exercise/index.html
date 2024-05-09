@@ -21,6 +21,7 @@
       <button id="confirmworkoutname">Confirm</button>
     </div>
     <div id="createphase2" class="subscreen">
+      <h1 id="workoutname"></h1>
       <div id="exerciseroutine"></div>
       <p id="routinetime"></p>
       <h1>Select a workout move</h1>
@@ -35,7 +36,10 @@
           <button id="cancel-exercise-modal">Cancel</button>
         </form>
       </dialog>
-      <input id="upload" type="checkbox" id="upload">
+      <label for="exerciseroutinedesc">Workout description</label>
+      <input type="textarea" id="exerciseroutinedesc">
+      <label class="uploadroutine" for="upload">Upload this workout</label>
+      <input class="uploadroutine" id="upload" type="checkbox">
       <button id="start">Start</button>
       <button id="backbutton">Back</button>
     </div>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title id="pagetitle">Profile</title>
+</head>
+<script defer src="index.js"></script>
+<body>
+  <nav></nav>
+  <h1>Community Exercise Routines</h1>
+
+  <!-- Display area for messages -->
+  <div id="workout-routines-container"></div>
+
+
+</html>
+
+<script>
+  fetch('../navbar.html')
+    .then(response  => response.text())
+    .then((data) => {
+      console.log(data)
+      document.querySelector('nav').innerHTML = data;
+      console.log(document.querySelector('nav'))
+    });
+    
+</script>

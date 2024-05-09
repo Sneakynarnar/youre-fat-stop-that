@@ -13,13 +13,15 @@ export async function init() {
   });
   return db;
 }
-console.log("Setting up database...");
+
 const connect = init();
 
 /**
  * Initialises the database.
  */
-async function initDataBase() {
+export async function initDataBase() {
+  console.log("Setting up database...");
+
   const db = await connect;
   await db.run("DROP TABLE IF EXISTS WorkoutRoutines;");
   await db.run("DROP TABLE IF EXISTS Workouts;");
@@ -28,13 +30,14 @@ async function initDataBase() {
     id BIGINT PRIMARY KEY,
     streak INTEGER NOT NULL DEFAULT 0,
     username TEXT,
-    totalminutedone INTEGER NOT NULL DEFAULT 0,
-    totalworkoutsdone INTEGER NOT NULL DEFAULT 0,
-    totalworkoutscreated INTEGER NOT NULL DEFAULT 0,
-    minutesthisweek INTEGER NOT NULL DEFAULT 0,
-    minutestoday INTEGER NOT NULL DEFAULT 0,
+    email TEXT,
+    image TEXT,
+    total_minutes_done INTEGER NOT NULL DEFAULT 0,
+    total_workouts INTEGER NOT NULL DEFAULT 0,
+    minutes_today INTEGER NOT NULL DEFAULT 0,
+    distance_travelled INTEGER NOT NULL DEFAULT 0,
     date_created TEXT DEFAULT CURRENT_TIMESTAMP
-  );`);
+  );`); //TODO: total workouts created
 
   await db.run(`CREATE TABLE IF NOT EXISTS Workouts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -48,14 +51,33 @@ async function initDataBase() {
   );`);
 
   await db.run(`CREATE TABLE IF NOT EXISTS WorkoutRoutines (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    account_id INTEGER NOT NULL,
-    workout_id INTEGER NOT NULL,
-    workoutroutine TEXT NOT NULL,
+    workout_id text PRIMARY KEY,
+    account_id BIGINT NOT NULL,
+    description TEXT NOT NULL,
+    workout_name TEXT NOT NULL,
+    workout_routine TEXT NOT NULL,
     FOREIGN KEY (account_id) REFERENCES Accounts(id),
     FOREIGN KEY (workout_id) REFERENCES Workouts(id)
   );`);
   console.log("Database set up!");
+
+  await db.run(`INSERT INTO Accounts (id, username, email, image, total_minute_done, total_workouts_done, minutes_today, streak) VALUES (109595868691087100000, 'Sneaky', 'sneakynarnar@gmail.com', 'https://lh3.googleusercontent.com/a/ACg8ocKGJIIVSs4R6RCLquIdxsGIUw-grGE_A4eamo3PWKhi7yCsU-8=s96-c', 5000, 300, 20, 100);`);
+
+  for (let i = 0; i < 10; i++) {
+    const username = `User${i}`;
+    const email = `user${i}@example.com`;
+    const image = `https://dummyimage.com/200x200`;
+    const totalMinutesDone = Math.floor(Math.random() * 1000);
+    const totalWorkouts = Math.floor(Math.random() * 50);
+    const minutesToday = Math.floor(Math.random() * 60);
+    const streak = Math.floor(Math.random() * 150);
+
+    await db.run(`INSERT INTO Accounts (id, username, email, image, total_minutes_done, total_workouts, minutes_today, streak, distance_travelled) VALUES (${i}, '${username}', '${email}', '${image}', ${totalMinutesDone}, ${totalWorkouts}, ${minutesToday}, ${streak});`);
+  }
+
+
+
+
 }
 
 export async function exerciseFromJson() {
@@ -71,5 +93,5 @@ export async function exerciseFromJson() {
     console.error(error);
     }
   }
-await initDataBase();
+
 // await exerciseFromJson();

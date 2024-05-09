@@ -6,79 +6,47 @@
     <script defer src="index.js"></script>
   </head>
   <body>
-    <h1>Dashboard</h1>
-      <svg class="progress-ring" viewBox="0 0 500 500">
-        <text
-          id="ctext"
-          class="progress-text"
-          x="250"
-          y="250"
-          text-anchor="middle"
-          dominant-baseline="middle"
-        >
-          0%
-        </text>
-        <circle
-          class="progress-ring-circle"
-          id="a"
-          stroke="black"
-          stroke-width="4"
-          fill="transparent"
-          r="129"
-          cx="250"
-          cy="250"
-        />
-      </svg>
-
-      <svg class="progress-ring" viewBox="0 0 500 500">
-        <text
-          id="btext"
-          class="progress-text"
-          x="250"
-          y="250"
-          text-anchor="middle"
-          dominant-baseline="middle"
-        >
-          0%
-        </text>
-        <circle
-          class="progress-ring-circle"
-          id="b"
-          stroke="black"
-          stroke-width="4"
-          fill="transparent"
-          r="129"
-          cx="250"
-          cy="250"
-        />
-      </svg>
-      <svg class="progress-ring" viewBox="0 0 500 500">
-        <text
-          id="ctext"
-          class="progress-text"
-          x="250"
-          y="250"
-          text-anchor="middle"
-          dominant-baseline="middle"
-        >
-          0%
-        </text>
-        <circle
-          id="c"
-          class="progress-ring-circle"
-          stroke="black"
-          stroke-width="4"
-          fill="transparent"
-          r="129"
-          cx="250"
-          cy="250"
-        />
-    </svg>
-
-    <input class="testslider" type="range" min="0" max="100" value="50" />
-    <input class="testslider2" type="range" min="0" max="100" value="50" />
-    <input class="testslider3" type="range" min="0" max="100" value="50" />
-    <button id="startButton">Start Activity</button>
-    <button id="outsideActivity">Outside Activity</button>
+    <nav id="navbar"></nav>
+    <main>
+      <h1>Dashboard</h1>
+        <div id="metercontainer"> <!-- https://css-tricks.com/building-progress-ring-quickly/-->
+        <svg id="minutestoday" class="progress-ring" viewBox="0 0 800 800">
+          <text
+            id="ctext"
+            class="progress-text"
+            x="400"
+            y="400"
+            text-anchor="middle"
+            dominant-baseline="middle"
+          >
+            0%
+          </text>
+          <circle
+            class="progress-ring-circle"
+            id="a"
+            stroke="black"
+            stroke-width="4"
+            fill="transparent"
+            r="200"
+            cx="400"
+            cy="400"
+          />
+        </svg>
+        </div>
+      <input type="meter" class="hide" id="test" value="0" min="0" max="100" />
+      <div id="buttons">
+        <button id="startButton">Start Activity</button>
+        <button id="outsideActivity">Outside Activity</button>
+      </div>
+    </main>
   </body>
 </html>
+<script>
+  fetch('../navbar.html')
+    .then(response  => response.text())
+    .then((data) => {
+      console.log(data)
+      document.querySelector('#navbar').innerHTML = data;
+    });
+    
+</script>
