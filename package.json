@@ -5,7 +5,7 @@
   "main": "server.mjs",
   "scripts": {
     "start": "node server/server.mjs",
-    "setup": "npm install && node server/scripts/setup.mjs",
+    "setup": "node server/scripts/setup.mjs",
     "dev": "nodemon server/server.mjs"
   },
   "author": "An anonymous student",

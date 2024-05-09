@@ -30,6 +30,7 @@ const uploadCheckBox = document.querySelector('#upload');
 const exerciseRoutineDesc = document.querySelector('#exerciseroutinedesc');
 const uploadUi = document.querySelectorAll('.uploadroutine')
 const currentWorkoutName = document.querySelector('#workoutname');
+const mainCreateWorkout = document.querySelector('#maincreateworkout');
 const exerciseRoutineName = document.querySelector('#exerciseroutinename');
 const currentWorkout = {};
 let timer1, timer2;
@@ -67,6 +68,10 @@ async function main() {
     const routineData = await response.json();
     loadRoutine(routineData);
   }
+
+  mainCreateWorkout.addEventListener('click', () => {
+    changeScreenTo(2);
+  });
   confirmExercise.addEventListener('click', () => {
     exerciseIntensity.close();
   });
@@ -177,7 +182,7 @@ function startExerciseRoutineCreation() {
   console.log(phases);
   currentWorkout[exerciseName.value] = []; // current workout creation.
 }
-addButton.addEventListener('click', () => {
+mainCreateWorkout.addEventListener('click', () => {
   changeScreenTo(2);
 });
 confirmWorkoutName.addEventListener('click', startExerciseRoutineCreation);
@@ -315,12 +320,12 @@ async function startExercise() {
     workoutTimer.textContent = 'Workout Complete!';
     completetitle.textContent = 'You did alright, I guess...';
     completeMessage.textContent = "You are 1 step closer to stopping your fatness."
-    const response = await fetch('http://localhost:8080/api/workoutcompletion', {
+    const response = await fetch('http://localhost:8080/api/workout-completion', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: {time: totalTime}
+      body: JSON.stringify({time: totalTime})
     });
 
     const data = await response.json();

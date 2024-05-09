@@ -30,9 +30,14 @@ document.addEventListener("DOMContentLoaded", async () => {
  * Procedure for the event listeners to the input
  */
 function setMeters() {
-  console.log('currentUser.minutestoday: ', currentUser.minutestoday);
-  setProgress(circle, currentUser.minutestoday / 30 * 100);
-  text.item(0).textContent = Math.floor(currentUser.minutestoday) +  "/30 min"; // TODO: protect against NaN
+  console.log('currentUser.minutestoday: ', currentUser.minutes_today);
+  setProgress(circle, currentUser.minutes_today / 30 * 100);
+  if (currentUser.minutes_today == undefined) {
+    text.item(0).textContent = "0/30 min";
+    return;
+  } else {
+    text.item(0).textContent = Math.floor(currentUser.minutes_today) +  "/30 min"; // TODO: protect against NaN
+  }
 }
 /** Sets progress of the circle meter
  * @param {HTMLElement} meter SVG Circle meter element

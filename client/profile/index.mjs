@@ -24,9 +24,9 @@ async function loadPage() {
     <img id="pfp" src="${data.image}" alt="Profile picture">
     <p id = "Streak">${streakfire} Streak: ${data.streak}</p>
     <p id="totalworkscreated">Total workouts created: ${data.workoutsCreated}</p>
-    <p id="totalminutesdone">Total minutes done: ${data.totalminutesdone}</p>
-    <p id="totalworkoutsdone">Total workouts done: ${data.totalworkoutsdone}</p>
-    <p id="workoutsToday" class>Minutes today: ${data.minutestoday}</p>
+    <p id="totalminutesdone">Total minutes done: ${data.total_minutes_done}</p>
+    <p id="totalworkoutsdone">Total workouts done: ${data.total_workouts}</p>
+    <p id="workoutsToday" class>Minutes today: ${data.minutes_today}</p>
     <div id="profileinfo">
 
   `;

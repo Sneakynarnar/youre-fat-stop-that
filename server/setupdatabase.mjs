@@ -61,7 +61,7 @@ export async function initDataBase() {
   );`);
   console.log("Database set up!");
 
-  await db.run(`INSERT INTO Accounts (id, username, email, image, total_minute_done, total_workouts_done, minutes_today, streak) VALUES (109595868691087100000, 'Sneaky', 'sneakynarnar@gmail.com', 'https://lh3.googleusercontent.com/a/ACg8ocKGJIIVSs4R6RCLquIdxsGIUw-grGE_A4eamo3PWKhi7yCsU-8=s96-c', 5000, 300, 20, 100);`);
+  await db.run(`INSERT INTO Accounts (id, username, email, image, total_minutes_done, total_workouts, minutes_today, streak, distance_travelled) VALUES (109595868691087100000, 'Sneaky', 'sneakynarnar@gmail.com', 'https://lh3.googleusercontent.com/a/ACg8ocKGJIIVSs4R6RCLquIdxsGIUw-grGE_A4eamo3PWKhi7yCsU-8=s96-c', 5000, 300, 20, 100, 2000);`);
 
   for (let i = 0; i < 10; i++) {
     const username = `User${i}`;
@@ -71,8 +71,10 @@ export async function initDataBase() {
     const totalWorkouts = Math.floor(Math.random() * 50);
     const minutesToday = Math.floor(Math.random() * 60);
     const streak = Math.floor(Math.random() * 150);
+    const distanceTravelled = Math.floor(Math.random() * 1000); // Add this line
 
-    await db.run(`INSERT INTO Accounts (id, username, email, image, total_minutes_done, total_workouts, minutes_today, streak, distance_travelled) VALUES (${i}, '${username}', '${email}', '${image}', ${totalMinutesDone}, ${totalWorkouts}, ${minutesToday}, ${streak});`);
+
+    await db.run(`INSERT INTO Accounts (id, username, email, image, total_minutes_done, total_workouts, minutes_today, streak, distance_travelled) VALUES (${i}, '${username}', '${email}', '${image}', ${totalMinutesDone}, ${totalWorkouts}, ${minutesToday}, ${streak}, ${distanceTravelled});`);
   }
 
 

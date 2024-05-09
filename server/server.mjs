@@ -133,17 +133,20 @@ app.post('/api/outside-exercise-completion', authenticateToken, async (req, res)
     res.status(400).json({ message: 'Missing time' });
     return;
   }
-  if (time == undefined) {
+  if (req.body.distance == undefined) {
     res.status(400).json({ message: 'Missing distance' });
     return;
   }
-  db.run('UPDATE Accounts SET total_minutes_done = total_minuted_done + ?, total_workouts = total_workouts + 1, minutestoday = minutestoday + ?, distance_travelled = distance_travelled + ? WHERE id = ?;', [time, time, distance, userId]);
+
+  db.run('UPDATE Accounts SET total_minutes_done = total_minutes_done + ?, total_workouts = total_workouts + 1, minutes_today = minutes_today + ?, distance_travelled = distance_travelled + ? WHERE id = ?;', [time, time, req.body.distance, userId]);
 });
 
-app.post('/api/exercisecompletion', exerciseCompletionLimiter, authenticateToken, async (req, res) => { // rate limiting the exercise completion endpoint to 1 request per minute so that it's harder to abuse
+app.post('/api/workout-completion', exerciseCompletionLimiter, authenticateToken, async (req, res) => { // rate limiting the exercise completion endpoint to 1 request per minute so that it's harder to abuse
   const db = await connect;
   const time = Math.floor(req.body.time / 60); // this could be abused by the user so in production, you should calculate the time on the server, but I'm lazy.
   const userId = req.body.userId;
+  console.log('req.body: ', req.body);
+  
   const user = await db.get('SELECT * FROM Accounts WHERE id = ?;', [userId]);
   if (!user) {
     res.status(404).json({ message: 'User not found' });
@@ -156,7 +159,7 @@ app.post('/api/exercisecompletion', exerciseCompletionLimiter, authenticateToken
   const workoutRoutine = JSON.parse(workout.workoutroutine);
   const workoutTime = workoutRoutine.reduce((totalTime, exercise) => {
 
-  db.run('UPDATE Accounts SET totalminutedone = totalminutedone + ?, totalworkoutsdone = totalworkoutsdone + 1, minutesthisweek = minutesthisweel + ?, minutestoday = minutestoday + ? WHERE id = ?;', [workoutTime, workoutTime, workoutTime, userId]);
+  db.run('UPDATE Accounts SET total_minutes_done = total_minutes_done + ?, total_workouts = total_workouts_done + 1, minutes_today = minutes_today + ? WHERE id = ?;', [workoutTime, workoutTime, workoutTime, userId]);
   res.json({ message: 'Workout completed', workoutTime });
   });
 });
@@ -184,7 +187,11 @@ app.post('/api/verify', async (req, res) => {
     console.log('userStored: ', userStored);
   } catch (error) {
     console.log('error: ', error.toString());
-    res.status(401).json({ message: 'Verification failed', error: error.toString()});
+    try {
+      res.status(401).json({ message: 'Verification failed', error: error.toString()});
+    } catch {
+      return
+    }
   }
   
 });

@@ -1,4 +1,4 @@
 import { initDataBase, exerciseFromJson} from '../setupdatabase.mjs';
 
-initDataBase();
-exerciseFromJson();
+await initDataBase();
+await exerciseFromJson();
