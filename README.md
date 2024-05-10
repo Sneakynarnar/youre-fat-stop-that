@@ -1,5 +1,5 @@
 # You're fat, stop that.
-You're fat, stop that! This is a no nonsense fitness app that will sort you're life out
+You're fat, stop that! This is a no nonsense fitness app that will sort your life out.
 
 ## Quick start
 Open the project and run the following commands in a terminal:
