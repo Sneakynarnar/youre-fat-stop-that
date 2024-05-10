@@ -52,6 +52,7 @@ If I was stuck on how to do something, I would usually ask copilot. For example 
 - Naming system for variables and classes are inconsistent at times. Sometimes I join words by camelCase and other I use dashes, this would have been fixed given more time
 - Some requests need to be input checked more since it's quite easy to crash the server at the moment.
 - More moduarlisation. A lot of my server code is in one file which is not as maintanable as if I had it in multiple files
+- More exercises with more accurate info, since it does not take 5 seconds to do a burpee unless you are *very* *very* bad at it.
 
 ## ALL ROUTES
 ```
