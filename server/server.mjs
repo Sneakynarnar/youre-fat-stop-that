@@ -90,6 +90,11 @@ app.get("/api/getworkoutroutine/:id", async (req, res) => {
   res.json(workout);
 });
 
+app.get("/api/leaderboard", async (req, res) => {
+  const db = await connect;
+  const users = await db.all('SELECT a.id, a.username, a.total_minutes_done, a.total_workouts, a.minutes_today, a.distance_travelled, a.streak, COUNT(wr.workout_id) AS workouts_created FROM Accounts a LEFT JOIN WorkoutRoutines wr ON a.id = wr.account_id GROUP BY a.id ORDER BY a.total_minutes_done DESC LIMIT 10;');
+  res.json({ users });
+});
 app.get("/api/communityworkoutroutines", async (req, res) => {
   const db = await connect;
   const workouts = await db.all('SELECT wr.workout_id, wr.account_id, wr.description, a.username, wr.workout_name, wr.workout_routine FROM WorkoutRoutines wr JOIN Accounts a ON wr.account_id = a.id');
@@ -144,7 +149,8 @@ app.post('/api/outside-exercise-completion', authenticateToken, async (req, res)
 app.post('/api/workout-completion', exerciseCompletionLimiter, authenticateToken, async (req, res) => { // rate limiting the exercise completion endpoint to 1 request per minute so that it's harder to abuse
   const db = await connect;
   const time = Math.floor(req.body.time / 60); // this could be abused by the user so in production, you should calculate the time on the server, but I'm lazy.
-  const userId = req.body.userId;
+  // also this means that a workout of < a minute will not be counted in the database to prevent users spamming workouts to get on the leaderboard (even though its rate limited)
+  const userId = req.user.userid
   console.log('req.body: ', req.body);
   
   const user = await db.get('SELECT * FROM Accounts WHERE id = ?;', [userId]);
@@ -152,17 +158,14 @@ app.post('/api/workout-completion', exerciseCompletionLimiter, authenticateToken
     res.status(404).json({ message: 'User not found' });
     return;
   }
-  if (!time) {
+  if (time == undefined) {
     res.status(400).json({ message: 'Missing time' });
     return;
   }
-  const workoutRoutine = JSON.parse(workout.workoutroutine);
-  const workoutTime = workoutRoutine.reduce((totalTime, exercise) => {
-
-  db.run('UPDATE Accounts SET total_minutes_done = total_minutes_done + ?, total_workouts = total_workouts_done + 1, minutes_today = minutes_today + ? WHERE id = ?;', [workoutTime, workoutTime, workoutTime, userId]);
-  res.json({ message: 'Workout completed', workoutTime });
-  });
+  db.run('UPDATE Accounts SET total_minutes_done = total_minutes_done + ?, total_workouts = total_workouts_done + 1, minutes_today = minutes_today + ? WHERE id = ?;', [time, time, time, userId]);
+  res.json({ message: 'Workout completed' });
 });
+
 
 app.get('/profile/:id', async (req, res) => {
   res.sendFile(path.join(__dirname, '/client/profile/index.html'));

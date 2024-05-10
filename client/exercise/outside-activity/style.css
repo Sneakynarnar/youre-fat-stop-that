@@ -2,6 +2,10 @@
 .hidden {
     display: none;
 }
+#exerciseInfo {
+  width: 100vw;
+
+}
 .in-progress {
     color: #fc8600;
   }
@@ -9,13 +13,18 @@
   .completed {
     color: #28a745;
   }
-body {
+
+#body {
+  background-color: #f4f4f4;
+}
+#pagecontent {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+ 
   }
   
   
   #map {
+    width: 100vw;
     margin-bottom: 20px;
     border: 1px solid #ccc;
   }
@@ -49,3 +58,18 @@ body {
   .hidden {
     display: none;
   }
+
+  
+@media screen and (max-width: 600px) {
+  #pagecontent {
+    flex-direction: column;
+  }
+
+  #map, #exerciseInfo {
+    width: 100%;
+  }
+
+  #exerciseInfo h2, #exerciseInfo p {
+    font-size: 1.2em;
+  }
+}

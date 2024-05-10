@@ -4,7 +4,7 @@ let exercising = false;
 const exerciseInfo = document.querySelector('#exerciseInfo');
 const exerciseDistance = document.querySelector('#exerciseDistance');
 const exerciseTime = document.querySelector('#exerciseTime');
-const exerciseType = document.querySelector('#exerciseType');
+const exerciseType = document.querySelector('#exerciseTypeText');
 const exerciseCalories = document.querySelector('#exerciseCalories');
 const startExerciseButton = document.querySelector('#startExercise');
 const endExerciseButton = document.querySelector('#endExercise');
@@ -21,7 +21,23 @@ document.addEventListener("DOMContentLoaded", async () => {
   currentUser = await fetch("http://localhost:8080/api/current_user").then((res) => res.json());
   document.querySelector("#nav-profile").src = currentUser.image;
   document.querySelector("#profilelink").href = `/profile/${currentUser.id}`;
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log('Service Worker registered with scope:', registration.scope);
+      })
+      .catch(err => {
+        console.log('Service Worker registration failed:', err);
+      });
+  }
 });
+
+function setProgress(meter, percent) {
+  
+  const offset = circumference - (percent) / 100 * circumference;
+  meter.style.strokeDashoffset = offset;
+  // How much to offset the dashes in the css which correlates to how "complete" the circle is
+}
 function setupGeoMap() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -105,7 +121,6 @@ async function startExercise() {
     rate = walkCalorieRate;
   }
   exerciseType.innerHTML = selectedExerciseType;
-
   exerciseDistance.innerHTML = '0M';
   exercising = true;
   pathCoordinates = [];

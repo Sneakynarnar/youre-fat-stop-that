@@ -91,43 +91,6 @@
       }
     }
   },
-  "outside": {
-    "name": "Outside Exercise",
-    "activities": {
-      "walk": {
-        "name": "Walk",
-        "description": "Go for a walk to improve cardiovascular health and enjoy the outdoors.",
-        "type": 2,
-        "base_time": 15
-      },
-      "run": {
-        "name": "Run",
-        "description": "Go for a run to improve cardiovascular fitness and build endurance.",
-        "type": 2,
-        "base_time": 15,
-        "rests": 2
-      },
-      "bicycle": {
-        "name": "Bicycle",
-        "description": "Ride a bicycle to improve cardiovascular fitness and strengthen leg muscles.",
-        "type": 2,
-        "base_time": 15
-      },
-      "jump-rope": {
-        "name": "Jump Rope",
-        "description": "Jump rope to improve cardiovascular fitness, coordination, and agility.",
-        "type": 1,
-        "base_reps": 50,
-        "average_rep": 1
-      },
-      "hiking": {
-        "name": "Hiking",
-        "description": "Go hiking to enjoy nature, burn calories, and improve cardiovascular fitness.",
-        "type": 2,
-        "base_time": 30
-      }
-    }
-  },
   "weights": {
     "name": "Weights",
     "activities": {

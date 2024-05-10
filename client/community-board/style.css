@@ -1,0 +1,56 @@
+#workout-routines-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  font-size: 2em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#workout-routines-container div {
+  background-color: #f4f4f4;
+  padding: 1em;
+  border-radius: 0.5em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#workout-routines-container h2 {
+  margin-bottom: 0.5em;
+  color: #333;
+}
+
+#workout-routines-container p {
+  margin-bottom: 0.5em;
+  color: #666;
+}
+
+#workout-routines-container a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+#workout-routines-container a:hover {
+  text-decoration: underline;
+}
+
+.copy {
+  font-size: 0.8em;
+  background-color: #13d1c8;
+  color: #fff;
+  padding: 0.5em 1em;
+  border: none;
+  border-radius: 0.3em;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+
+
+copy:hover {
+  background-color: #0faea5;
+}
+}

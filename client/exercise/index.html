@@ -7,66 +7,128 @@
   <script defer src="exercise.mjs"></script>
 </head>
 <body>
-  <section id="screen1" class="screen active">
-    <div class="creator-container">
-      <button id="maincreateworkout">Create a workout</button>
+  <nav id="nav"></nav>
+  <div id="screencontainer">
+    <section id="screen1" class="screen active">
+      <div id="screen1-button-containter">
+        <div class="creator-container fade-in-down">
+          <button id="maincreateworkout">Create a workout</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
-  <section id="screen2" class="screen">
-    <div id="createphase1" class="subscreen active">
-      <h1>What would you like to name your workout routine</h1> 
-      <input type="text" id="exerciseroutinename">
-      <button id="confirmworkoutname">Confirm</button>
-    </div>
-    <div id="createphase2" class="subscreen">
-      <h1 id="workoutname"></h1>
-      <div id="exerciseroutine"></div>
-      <p id="routinetime"></p>
-      <h1>Select a workout move</h1>
-      <div id="exerciseoptions">  
+    </section>
+    <section id="screen2" class="screen">
+      <div id="createphase1" class="subscreen active">
+        <div id="confirm-workout-name-container">
+          <h1 class="fade-in-down">What would you like to name your workout routine</h1> 
+          <div class="fade-in-down-2">
+            <input type="text" id="exerciseroutinename">
+            <button id="confirmworkoutname" disabled>Confirm</button>
+          </div>
+        </div>
       </div>
-      <dialog id="exercise-intensity">
-        <form method="dialog">
-          <label id="exercise-details-label">How many reps would you like to do</label>
-          <input id="exercise-details-input" type="number">
-          <p id="timelength"></p>
-          <button id="confirm-exercise-modal" disabled>Confirm</button>
-          <button id="cancel-exercise-modal">Cancel</button>
-        </form>
-      </dialog>
-      <label for="exerciseroutinedesc">Workout description</label>
-      <input type="textarea" id="exerciseroutinedesc">
-      <label class="uploadroutine" for="upload">Upload this workout</label>
-      <input class="uploadroutine" id="upload" type="checkbox">
-      <button id="start">Start</button>
-      <button id="backbutton">Back</button>
-    </div>
+      <div id="createphase2" class="subscreen">
+        <div class="fade-in-down">
+          <h1 id="workoutname"></h1>
+          <div id="exerciseroutine"></div>
+          <div id="create-options">
+            <div>
+              <label for="exerciseroutinedesc">Workout description</label>
+              <input type="textarea" id="exerciseroutinedesc">
+            </div>
+          <div>
+            <label class="uploadroutine" for="upload">Upload this workout</label>
+            <input class="uploadroutine" id="upload" type="checkbox">
+          </div>
+          <div class="buttons">
+            <button id="start" disabled>Start</button>
+            <button id="backbutton">Back</button>
+          </div>
+        </div>
+        <button id="delete-last-exercise">Delete last element</button>
+        </div>
+        <div class="fade-in-down-3">
+          <p id="routinetime"></p>
+          <h1>Select a workout move</h1>
+          <div id="exerciseoptions">  
+          </div>
+        </div>
+        <dialog id="exercise-intensity">
+          <form method="dialog">
+            <label id="exercise-details-label">How many reps would you like to do</label>
+            <input id="exercise-details-input" type="number">
+            <p id="timelength"></p>
+            <button id="confirm-exercise-modal" disabled>Confirm</button>
+            <button id="cancel-exercise-modal">Cancel</button>
+          </form>
+        </dialog>
+      </div>
 
-  </section>
-  <section id="screen3" class="screen">
-    <button id="startexercise">Start the exercise!</button>
-  </section>
-  <section id="screen4" class="screen">
-    <div id="main">
-      <div id="exercisecontainer">
-        <div id="exercise"></div>
-      <div id="timer">
-        <p class="timer1">00:00</p>
-        <p class="timer2">00:00</p>
+    </section>
+    <section id="screen3" class="screen">
+      <div id="startexercisecontainer">
+        <button id="startexercise">Start the exercise!</button>
       </div>
-      <div id="buttons">
-        <button id="pauseplay">Pause</button>
-        <button id="stopexercise">Stop (i'm weak)</button>
+    </section>
+    <section id="screen4" class="screen">
+      <!-- <div id="exercise">testing</div> -->
+      <div id="formatdiv"></div>
+      <div id="main">
+        <div id="metercontainer"> <!-- https://css-tricks.com/building-progress-ring-quickly/-->
+          <svg id="exercise-ring" class="progress-ring" viewBox="0 0 800 800" >
+            <text
+              id="ctext"
+              class="progress-text"
+              x="400"
+              y="400"
+              text-anchor="middle"
+              dominant-baseline="middle"
+            >
+            </text>
+            <circle
+              class="progress-ring-circle"
+              id="a"
+              stroke="green"
+              stroke-width="4"
+              fill="transparent"
+              r="390"
+              cx="400"
+              cy="400"
+            />
+          </svg>
+        </div>
+        <div id="timer">
+          <p class="timer1"></p>
+        </div>
+        <div class="buttons stopped">
+          <button id="pauseplay">Pause</button>
+          <button id="stopexercise">Stop (i'm weak)</button>
+        </div>
       </div>
-    </div>
-
-    <div id ="workoutcomplete" class="hidden">
-      <h1 id="completetitle">You did alright I guess...</h1>
-      <p id ="completemessage">You are 1 step closer to not being fat!</p>
-    <button id="backtodashboard">Go back to dashboard</button>
-    <button id="workoutagain">Do another workout</button>
-    </div>
-  </section>
+      <div class ="workoutcomplete hidden">
+        <div class="complete-status-text">
+          <div>
+            <h1 id="completetitle">You did alright I guess...</h1>
+            <p id ="completemessage">You are 1 step closer to not being fat!</p>
+        </div>
+        </div>
+        <div class="buttons">
+          <button id="backtodashboard">Go back to dashboard</button>
+          <button id="workoutagain">Do another workout</button>
+        </div>
+      </div>
+    </section>
+  </div>
 </body>
 </html>
+
+<script>
+  fetch('../navbar.html')
+    .then(response  => response.text())
+    .then((data) => {
+      console.log(data)
+      document.querySelector('nav').innerHTML = data;
+      console.log(document.querySelector('nav'))
+    });
+    
+</script>

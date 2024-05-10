@@ -1,70 +1,375 @@
-body {
-  display: flex
+
+.fade-in-down {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fade-in-down 1s ease-out forwards;
 }
-.hidden {
-  display: none;
+.fade-in-down-2 {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fade-in-down 1s ease-out forwards;
+  animation-delay: 0.5s;
 }
+.fade-in-down-3 {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fade-in-down 1s ease-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes fade-in-down {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#screen-container {
+  background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  display: flex;
+}
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+} */
+#screen1-button-containter {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .subscreen,
 .screen {
   display: none;
+  height: 100vh;
+  width: 100vw;
 }
+
 .screen.active,
 .subscreen.active {
-  display: block; 
-}/* check if templates are faster */
+  display: block;
+}
 
 .button-container {
-  display: flex; 
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
 }
 
 .exercise-category {
-  justify-items: center;
-  display:flex
-}
-.exercise-panel {
-  height: 5em;
-  width: 5em;
-  justify-content: center;
-  justify-items: center;
   display: flex;
-  border: solid black
+  /* flex-wrap: wrap; */
+  overflow-x: auto;
+  white-space: nowrap;
+  gap: 20px;
 }
+
+.exercise-panel {
+  height: 6em;
+  width: 6em;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.exercise-panel:hover {
+  transform: scale(1.05);
+
+}
+
 .exercise-name-text {
   align-self: center;
   text-align: center;
+  font-size: 1.2em;
 }
+
 .button {
-  background-color: azure;
-  border: 3px solid;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+
+.button:hover {
+  background-color: #45a049;
+  color: white;
 }
 
 #exerciseroutine {
-  display: flex;  
-
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
 }
+
 .unselected {
   display: none;
-}
-.button:hover {
-  transition: ease-in-out 0.3s;
-  transform: scale(1.05);
-  cursor: pointer;
 }
 
 .panelcontainer {
   display: flex;
   justify-content: center;
-  align-self: center;
-
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 .panel {
-  border: solid 0.2em black;
+  border: 1px solid #ccc;
   height: 10em;
-  width: 7em; 
+  width: 7em;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
 }
 
 .panel:hover {
   transform: scale(1.05);
-  transition: ease-in-out 0.1s
 }
+#maincreateworkout {
+  width: 10em;
+  height: 3em;
+  margin: 0 auto; 
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 2em;
+  text-align: center;
+  line-height: 50px;
+  transition: all 0.5s;
+  cursor: pointer;
+  box-shadow: 0 10px 20px #00000030;
+  white-space: nowrap; 
+}
+#startexercise {
+  width: 10em;
+  height: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#startexercisecontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+#maincreateworkout:hover {
+  background-color: #45a049;
+  box-shadow: 0 10px 20px #00000050; 
+  transform: scale(1.05); 
+}
+#exercisecontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#timer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+#metercontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.progress-ring {
+  width: 100%;
+  max-width: 300px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #4CAF50;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#ctext {
+  font-size: 3em;
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+  
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+
+
+.progress-ring {
+  width: 100vw;
+  height: 100%;
+}
+
+.progress-ring-circle {
+  transform-origin: 250px 250px;
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+.progress-ring-circle.resting {
+  transition: stroke-dashoffset 10s;
+  animation: restingColourChange 10s;;
+}
+
+.progress-ring-circle.stopped {
+  stroke: red;
+}
+
+@keyframes restingColourChange {
+  0% { stroke: red; }
+  50% { stroke: orange; }
+  100% { stroke: green; }
+}
+
+@keyframes colorChange {
+  0% { stroke: green; }
+  50% { stroke: orange; }
+  100% { stroke: red; }
+}
+#main {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+#timer {
+  display: flex;
+  justify-content: center;
+  
+}
+#metercontainer {
+  height: 50vh;
+  width: 75vw;
+}
+
+#formatdiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-direction: column;
+} 
+
+#workoutcomplete {
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none 
+}
+
+.complete-status-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+#create-options {
+  /* flex-direction: column; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+
+h1 {
+  font-size: 2em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 8px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+  font-size: 1em;
+  margin-bottom: 6px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#delete-last-exercise {
+  background-color: #f44336;
+}
+
+#confirm-workout-name-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+
+#exerciseroutinename {
+  border: none;
+  border-bottom: 1px solid black;
+  outline: none;
+  margin-right: 2em;
+}
+

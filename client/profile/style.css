@@ -14,13 +14,13 @@ body {
   border-radius: 10px;
   display: flex;
   align-items: center;
-
+}
   h2 {
     color: #333;
     margin-bottom: 10px;
   }
 
-  img {
+  #pfp {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -35,5 +35,27 @@ body {
     &:not(:last-child) {
       margin-bottom: 10px;
     }
+  }
+
+@media (max-width: 600px) {
+  #profile-container {
+    /* Increase the vertical space */
+    padding: 40px;
+  }
+
+  h2 {
+    /* Increase the font size */
+    font-size: 24px;
+  }
+
+  img {
+    /* Increase the size of the profile picture */
+    width: 150px;
+    height: 150px;
+  }
+
+  p {
+    /* Increase the font size */
+    font-size: 18px;
   }
 }

@@ -1,14 +1,38 @@
-<table>
-  <thead>
-    <tr>
-      <th>Username &#8593;&#8595;</th>
-      <th>Total Workouts Created &#8593;&#8595;</th>
-      <th>Total Minutes Done &#8593;&#8595;</th>
-      <th>Total Workouts Done &#8593;&#8595;</th>
-      <th>Minutes per Day &#8593;&#8595;</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Add table rows here -->
-  </tbody>
-</table>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YFST leaderboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="index.js"></script>
+  </head>
+  <body>
+    <nav id="nav"></nav>
+    <table>
+      <thead>
+        <tr>
+          <th>Place</th>
+          <th>Username</th>
+          <th>Total Minutes Done</th>
+          <th>Total Workouts Done</th>
+          <th>Streak</th>
+          <th>Minutes today</th>
+          <th>Total Workouts Created</th>
+          <th>Distance Travelled</th>
+        </tr>
+      </thead>
+    <tbody id="leaderboard">
+    </tbody>
+    </table>
+  </body>
+</html>
+
+<script>
+  fetch('../navbar.html')
+    .then(response  => response.text())
+    .then((data) => {
+      console.log(data)
+      document.querySelector('nav').innerHTML = data;
+      console.log(document.querySelector('nav'))
+    });
+</script>
